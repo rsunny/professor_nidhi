@@ -26,11 +26,23 @@ SCREENSHOTS_DIR.mkdir(exist_ok=True)
 LINKEDIN_EMAIL = os.getenv("LINKEDIN_EMAIL", "")
 LINKEDIN_PASSWORD = os.getenv("LINKEDIN_PASSWORD", "")
 
-# File paths
-RESUME_PATH = os.getenv("RESUME_PATH", "")
-COVER_LETTER_GENERIC_PATH = os.getenv("COVER_LETTER_GENERIC_PATH", "")
-COVER_LETTERS_MD_PATH = os.getenv("COVER_LETTERS_MD_PATH", "")
-JOBS_MD_PATH = os.getenv("JOBS_MD_PATH", "")
+
+def _resolve_path(env_var: str, default: str = "") -> str:
+    """Resolve a path from .env, treating relative paths as relative to BASE_DIR."""
+    raw = os.getenv(env_var, default)
+    if not raw:
+        return ""
+    p = Path(raw)
+    if not p.is_absolute():
+        p = (BASE_DIR / p).resolve()
+    return str(p)
+
+
+# File paths (resolved relative to project root)
+RESUME_PATH = _resolve_path("RESUME_PATH")
+COVER_LETTER_GENERIC_PATH = _resolve_path("COVER_LETTER_GENERIC_PATH")
+COVER_LETTERS_MD_PATH = _resolve_path("COVER_LETTERS_MD_PATH")
+JOBS_MD_PATH = _resolve_path("JOBS_MD_PATH")
 
 # Rate limiting
 MAX_APPS_PER_HOUR = int(os.getenv("MAX_APPS_PER_HOUR", "5"))
