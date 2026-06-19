@@ -1,0 +1,5 @@
+output/storageState.json
+output/screenshots/
+.env
+__pycache__/
+*.pyc

@@ -1,0 +1,4 @@
+playwright==1.52.0
+python-dotenv==1.1.0
+weasyprint==63.1
+markdown==3.7
