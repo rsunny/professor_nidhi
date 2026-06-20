@@ -1,15 +1,34 @@
-"""Anti-detection: random delays, scroll simulation, rate limiting."""
-
-from __future__ import annotations
+"""Anti-detection: random delays, scroll simulation, mouse movements."""
 
 import asyncio
 import random
 import time
-from typing import List
-from playwright.async_api import Page
 
-# Track application timestamps for rate limiting
-_app_timestamps: List[float] = []
+
+class RateLimiter:
+    """Track application rate and enforce limits."""
+
+    def __init__(self, max_per_hour: int = 5):
+        self.max_per_hour = max_per_hour
+        self.timestamps: list[float] = []
+
+    def can_apply(self) -> bool:
+        """Check if we can apply without exceeding rate limit."""
+        now = time.time()
+        one_hour_ago = now - 3600
+        self.timestamps = [t for t in self.timestamps if t > one_hour_ago]
+        return len(self.timestamps) < self.max_per_hour
+
+    def record_application(self):
+        """Record that an application was submitted."""
+        self.timestamps.append(time.time())
+
+    def wait_time(self) -> float:
+        """Seconds to wait before next application is allowed."""
+        if self.can_apply():
+            return 0
+        oldest = min(self.timestamps)
+        return (oldest + 3600) - time.time()
 
 
 async def random_delay(min_sec: float = 1.0, max_sec: float = 3.0):
@@ -18,66 +37,54 @@ async def random_delay(min_sec: float = 1.0, max_sec: float = 3.0):
     await asyncio.sleep(delay)
 
 
-async def simulate_reading(page: Page, duration_sec: float = None):
-    """Simulate a human reading a page — scroll, pause, scroll back."""
+async def simulate_reading(page, duration_sec: float = None):
+    """Simulate reading a page — scroll slowly, pause, scroll back."""
     if duration_sec is None:
-        duration_sec = random.uniform(8, 20)
+        duration_sec = random.uniform(15, 45)
 
-    start = time.time()
-    while time.time() - start < duration_sec:
-        # Scroll down a bit
-        scroll_amount = random.randint(100, 400)
+    end_time = time.time() + duration_sec
+    viewport_height = page.viewport_size["height"] if page.viewport_size else 800
+
+    while time.time() < end_time:
+        # Scroll down a random amount
+        scroll_amount = random.randint(100, viewport_height // 2)
         await page.mouse.wheel(0, scroll_amount)
         await asyncio.sleep(random.uniform(1.5, 4.0))
 
-    # Scroll back to top
-    await page.evaluate("window.scrollTo(0, 0)")
-    await asyncio.sleep(random.uniform(0.5, 1.5))
+        # Occasionally scroll up slightly
+        if random.random() < 0.3:
+            await page.mouse.wheel(0, -random.randint(50, 150))
+            await asyncio.sleep(random.uniform(0.5, 1.5))
 
 
-async def random_mouse_move(page: Page):
-    """Move mouse to random positions to simulate human behavior."""
-    for _ in range(random.randint(2, 5)):
-        x = random.randint(100, 1200)
-        y = random.randint(100, 600)
-        await page.mouse.move(x, y)
-        await asyncio.sleep(random.uniform(0.1, 0.4))
+async def random_mouse_move(page):
+    """Move mouse to a random position on the page."""
+    viewport = page.viewport_size or {"width": 1280, "height": 800}
+    x = random.randint(100, viewport["width"] - 100)
+    y = random.randint(100, viewport["height"] - 100)
+    await page.mouse.move(x, y)
+    await asyncio.sleep(random.uniform(0.1, 0.3))
 
 
-async def type_like_human(page: Page, selector: str, text: str):
-    """Type text character by character with random delays."""
-    element = await page.query_selector(selector)
-    if element:
-        await element.click()
-        await asyncio.sleep(0.2)
-        for char in text:
-            await element.type(char, delay=random.randint(30, 120))
-        await asyncio.sleep(0.3)
+async def human_type(page, selector: str, text: str):
+    """Type text with human-like delays between keystrokes."""
+    element = page.locator(selector)
+    await element.click()
+    await asyncio.sleep(random.uniform(0.2, 0.5))
+
+    # Clear existing text
+    await element.fill("")
+    await asyncio.sleep(random.uniform(0.1, 0.3))
+
+    # Type character by character with varying speed
+    for char in text:
+        await element.press_sequentially(char, delay=random.randint(30, 120))
+
+    await asyncio.sleep(random.uniform(0.2, 0.5))
 
 
-def check_rate_limit(max_per_hour: int) -> bool:
-    """Check if we've exceeded the rate limit. Returns True if OK to proceed."""
-    now = time.time()
-    one_hour_ago = now - 3600
-
-    # Remove timestamps older than 1 hour
-    _app_timestamps[:] = [t for t in _app_timestamps if t > one_hour_ago]
-
-    if len(_app_timestamps) >= max_per_hour:
-        wait_time = _app_timestamps[0] - one_hour_ago
-        print(f"[rate-limit] Hit {max_per_hour}/hour limit. Wait {wait_time:.0f}s before next application.")
-        return False
-
-    return True
-
-
-def record_application():
-    """Record that an application was submitted."""
-    _app_timestamps.append(time.time())
-
-
-async def inter_application_delay(min_sec: int = 30, max_sec: int = 120):
-    """Wait between applications with random delay."""
-    delay = random.randint(min_sec, max_sec)
-    print(f"[humanizer] Waiting {delay}s before next application...")
+async def inter_application_delay(min_sec: float = 30, max_sec: float = 120):
+    """Long delay between applications to appear human."""
+    delay = random.uniform(min_sec, max_sec)
+    print(f"  ⏳ Waiting {delay:.0f}s before next application...")
     await asyncio.sleep(delay)

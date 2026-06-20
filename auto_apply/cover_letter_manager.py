@@ -1,200 +1,163 @@
-"""Cover letter matching — parse cover_letters.md, match to jobs, generate PDFs."""
-
-from __future__ import annotations
+"""Cover letter matching — find the right cover letter for each job."""
 
 import re
 import tempfile
 from pathlib import Path
-from typing import Dict, Optional
-from config import COVER_LETTERS_MD_PATH, COVER_LETTER_GENERIC_PATH
+
+from config import COVER_LETTER_DIR, GENERIC_COVER_LETTER
 
 
-def parse_cover_letters(md_path: str = None) -> Dict[str, str]:
-    """Parse cover_letters.md into a dict keyed by company/role identifier.
+def parse_cover_letters(md_path: Path = None) -> dict[str, str]:
+    """Parse cover_letters.md into a dict keyed by heading (company/role info)."""
+    if md_path is None:
+        md_path = COVER_LETTER_DIR / "cover_letters.md"
 
-    Returns: { "jp morgan": "Dear Hiring Manager...", "goldman sachs_treasury": "Dear..." }
-    """
-    path = md_path or COVER_LETTERS_MD_PATH
-    with open(path, "r") as f:
+    if not md_path.exists():
+        return {}
+
+    with open(md_path) as f:
         content = f.read()
 
     letters = {}
     # Split by ## headings
     sections = re.split(r"^## ", content, flags=re.MULTILINE)
 
-    for section in sections[1:]:  # Skip content before first ##
+    for section in sections[1:]:  # Skip preamble before first ##
         lines = section.strip().split("\n")
         heading = lines[0].strip()
-
-        # Extract body (skip heading line and any blank lines / dashes)
+        # Body is everything after the heading, stripped of leading/trailing whitespace
         body_lines = []
         in_body = False
         for line in lines[1:]:
             if line.strip() == "---":
                 break
-            if line.strip().startswith("Dear ") or line.strip().startswith("Hi "):
+            if line.strip().startswith("Dear") or line.strip().startswith("Hi "):
                 in_body = True
             if in_body:
                 body_lines.append(line)
 
-        body = "\n".join(body_lines).strip()
-        if not body:
-            continue
-
-        # Create multiple keys for matching
-        # Key by number: "#1", "#2", etc.
-        num_match = re.search(r"#(\d+)", heading)
-        if num_match:
-            letters[f"#{num_match.group(1)}"] = body
-
-        # Key by company name (lowercase, extracted from heading)
-        # Heading format: "#1 — Trade Support Analyst | JP Morgan"
-        company_match = re.search(r"\|\s*(.+?)$", heading)
-        if company_match:
-            company = company_match.group(1).strip().lower()
-            letters[company] = body
-
-        # Also key by full heading for fuzzy matching
-        letters[heading.lower()] = body
+        if body_lines:
+            letters[heading] = "\n".join(body_lines).strip()
 
     return letters
 
 
-# Cache parsed letters
-_letters_cache: Dict[str, str] = {}
-
-
-def get_letters() -> Dict[str, str]:
-    """Get cached parsed cover letters."""
-    global _letters_cache
-    if not _letters_cache:
-        _letters_cache = parse_cover_letters()
-    return _letters_cache
-
-
-def find_cover_letter_for_job(job: dict) -> Optional[str]:
-    """Find the best matching cover letter for a job.
-
-    Tries matching by:
-    1. Job ID (e.g., "#1")
-    2. Company name (fuzzy)
-    3. Returns None if no specific match (will use generic)
-    """
-    letters = get_letters()
-    job_id = job.get("id")
+def match_cover_letter(
+    job: dict, letters: dict[str, str]
+) -> tuple[str, str]:
+    """Match a job to its cover letter. Returns (letter_text, match_type)."""
     company = job.get("company", "").lower()
     title = job.get("title", "").lower()
+    job_id = job.get("id", 0)
 
-    # 1. Try exact ID match
-    key = f"#{job_id}"
-    if key in letters:
-        return letters[key]
+    # Try matching by job number in heading (e.g., "#1 — Trade Support Analyst | JP Morgan")
+    for heading, text in letters.items():
+        # Extract number from heading
+        num_match = re.search(r"#(\d+)", heading)
+        if num_match and int(num_match.group(1)) == job_id:
+            return text, "exact_id"
 
-    # 2. Try company name match
-    for letter_key, letter_body in letters.items():
-        if not letter_key.startswith("#"):
-            # Check if company name is contained in the key
-            if company and company in letter_key:
-                return letter_body
-            # Check if key company is in the job company
-            if letter_key in company:
-                return letter_body
+    # Try matching by company name
+    for heading, text in letters.items():
+        heading_lower = heading.lower()
+        if company and len(company) > 3:
+            # Check if company name appears in heading
+            company_words = [w for w in company.split() if len(w) > 3]
+            if any(word.lower() in heading_lower for word in company_words):
+                return text, "company_match"
 
-    # 3. Try partial company matching (for recruiters like "Mondrian Alpha")
-    company_words = company.split()
-    for letter_key, letter_body in letters.items():
-        if not letter_key.startswith("#"):
-            for word in company_words:
-                if len(word) > 3 and word in letter_key:
-                    return letter_body
+    # Try matching by job title keywords
+    for heading, text in letters.items():
+        heading_lower = heading.lower()
+        title_words = [w for w in title.split() if len(w) > 4]
+        matches = sum(1 for w in title_words if w.lower() in heading_lower)
+        if matches >= 2:
+            return text, "title_match"
 
-    return None
-
-
-def get_cover_letter_pdf_path(job: dict) -> str:
-    """Get the path to the appropriate cover letter PDF for a job.
-
-    If a specific cover letter exists, generate a PDF from it.
-    Otherwise, return the generic cover letter PDF path.
-    """
-    letter_text = find_cover_letter_for_job(job)
-
-    if letter_text:
-        # Generate a PDF from the text
-        return generate_cover_letter_pdf(letter_text, job)
-    else:
-        # Use generic
-        return COVER_LETTER_GENERIC_PATH
+    return "", "no_match"
 
 
-def generate_cover_letter_pdf(text: str, job: dict) -> str:
-    """Generate a professional PDF from cover letter text using WeasyPrint."""
+def get_cover_letter_pdf(job: dict, letters: dict[str, str]) -> Path:
+    """Get the PDF cover letter for a job. Check pre-generated PDFs first."""
+    from config import BASE_DIR
+
+    job_id = job.get("id", 0)
+    company = job.get("company", "Unknown").replace("/", "-").replace(" ", "_")
+
+    # Check pre-generated PDFs in output/cover_letters/ first
+    pre_generated_dir = BASE_DIR / "output" / "cover_letters"
+    if pre_generated_dir.exists():
+        expected_name = f"cover_letter_{job_id}_{company}.pdf"
+        expected_path = pre_generated_dir / expected_name
+        if expected_path.exists():
+            return expected_path
+        # Try fuzzy match on job_id prefix
+        for pdf in pre_generated_dir.glob(f"cover_letter_{job_id}_*.pdf"):
+            return pdf
+
+    # Try matching from cover_letters.md text
+    text, match_type = match_cover_letter(job, letters)
+
+    if not text or match_type == "no_match":
+        # Use generic cover letter
+        if GENERIC_COVER_LETTER.exists():
+            return GENERIC_COVER_LETTER
+        return None
+
+    # Generate PDF from the matched text
+    return generate_cover_letter_pdf(text, job)
+
+
+def generate_cover_letter_pdf(text: str, job: dict) -> Path:
+    """Convert cover letter text to a PDF file."""
     try:
         from weasyprint import HTML
 
-        company = job.get("company", "Unknown").replace(" ", "_").replace("/", "_")
+        company = job.get("company", "Unknown").replace("/", "-").replace(" ", "_")
         job_id = job.get("id", 0)
-        output_dir = Path(__file__).parent / "output" / "cover_letters"
-        output_dir.mkdir(parents=True, exist_ok=True)
-        pdf_path = output_dir / f"cover_letter_{job_id}_{company}.pdf"
 
-        # If already generated, reuse
+        # Create output directory for generated PDFs
+        pdf_dir = Path(COVER_LETTER_DIR) / "generated_pdfs"
+        pdf_dir.mkdir(exist_ok=True)
+        pdf_path = pdf_dir / f"cover_letter_{job_id}_{company}.pdf"
+
+        # If already generated, return existing
         if pdf_path.exists():
-            return str(pdf_path)
+            return pdf_path
 
-        # Convert to HTML with professional styling
+        # Convert markdown-ish text to HTML
         html_content = f"""
         <!DOCTYPE html>
         <html>
         <head>
             <style>
                 body {{
-                    font-family: 'Georgia', serif;
+                    font-family: 'Calibri', 'Helvetica Neue', Arial, sans-serif;
                     font-size: 11pt;
-                    line-height: 1.6;
-                    margin: 2.5cm 2.5cm 2.5cm 2.5cm;
-                    color: #222;
+                    line-height: 1.5;
+                    margin: 2.5cm;
+                    color: #333;
                 }}
-                .header {{
-                    margin-bottom: 20px;
-                }}
-                .name {{
-                    font-size: 14pt;
-                    font-weight: bold;
-                    margin-bottom: 4px;
-                }}
-                .contact {{
-                    font-size: 9pt;
-                    color: #555;
-                }}
-                .date {{
-                    margin-top: 20px;
-                    margin-bottom: 20px;
-                }}
-                p {{
-                    margin-bottom: 12px;
-                    text-align: justify;
-                }}
+                p {{ margin-bottom: 12pt; }}
             </style>
         </head>
         <body>
-            <div class="header">
-                <div class="name">Nidhi Shetty</div>
-                <div class="contact">nidhishettyuk23@gmail.com | +44 7368 215147 | London, UK</div>
-                <div class="contact">linkedin.com/in/nidhi-shetty23-1841b7181</div>
-            </div>
-            {"".join(f"<p>{line}</p>" if line.strip() else "" for line in text.split(chr(10)) if line.strip())}
+            {"".join(f"<p>{para}</p>" for para in text.split("\n\n") if para.strip())}
         </body>
         </html>
         """
 
         HTML(string=html_content).write_pdf(str(pdf_path))
-        print(f"[cover-letter] Generated PDF: {pdf_path.name}")
-        return str(pdf_path)
+        return pdf_path
 
     except ImportError:
-        print("[cover-letter] WeasyPrint not installed — falling back to generic PDF")
-        return COVER_LETTER_GENERIC_PATH
+        # WeasyPrint not available — fall back to generic
+        print("  ⚠️  WeasyPrint not installed; using generic cover letter")
+        if GENERIC_COVER_LETTER.exists():
+            return GENERIC_COVER_LETTER
+        return None
     except Exception as e:
-        print(f"[cover-letter] PDF generation failed: {e} — using generic")
-        return COVER_LETTER_GENERIC_PATH
+        print(f"  ⚠️  PDF generation failed: {e}; using generic")
+        if GENERIC_COVER_LETTER.exists():
+            return GENERIC_COVER_LETTER
+        return None

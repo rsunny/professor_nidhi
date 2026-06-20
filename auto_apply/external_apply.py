@@ -1,426 +1,556 @@
-"""External ATS form filler — handles Workday, Greenhouse, Lever, etc."""
-
-from __future__ import annotations
+"""External ATS form filler — handles Workday, Greenhouse, Lever, etc.
+Supports unlimited page depth — will keep clicking Next/Continue until submission."""
 
 import asyncio
-from typing import List
-from playwright.async_api import Page, BrowserContext
-from config import RESUME_PATH, get_application_answers
-from form_filler import detect_and_fill_fields, scan_form_questions
-from cover_letter_manager import get_cover_letter_pdf_path
-from humanizer import random_delay
-from logger import log_application
+import re
+from pathlib import Path
 
+from playwright.async_api import Page, TimeoutError as PlaywrightTimeout
 
-# ATS detection patterns
-ATS_PATTERNS = {
-    "workday": ["myworkdayjobs.com", "workday.com", "wd5.myworkdayjobs", "wd3.myworkdayjobs"],
-    "greenhouse": ["greenhouse.io", "boards.greenhouse.io"],
-    "lever": ["lever.co", "jobs.lever.co"],
-    "smartrecruiters": ["smartrecruiters.com", "jobs.smartrecruiters.com"],
-    "icims": ["icims.com"],
-    "taleo": ["taleo.net"],
-    "reed": ["reed.co.uk"],
-}
+from config import RESUME_PATH, SCREENSHOTS_DIR, MODE
+from form_filler import (
+    fill_text_field,
+    handle_radio_buttons,
+    handle_dropdown,
+    upload_resume,
+    upload_cover_letter,
+    match_answer,
+    get_answers,
+)
+from humanizer import random_delay, random_mouse_move
 
 
 def detect_ats(url: str) -> str:
-    """Detect which ATS system a URL belongs to."""
+    """Detect ATS system from URL pattern."""
     url_lower = url.lower()
-    for ats_name, patterns in ATS_PATTERNS.items():
-        for pattern in patterns:
-            if pattern in url_lower:
-                return ats_name
+    if "workday" in url_lower or "myworkday" in url_lower:
+        return "workday"
+    if "greenhouse.io" in url_lower or "boards.greenhouse" in url_lower:
+        return "greenhouse"
+    if "lever.co" in url_lower or "jobs.lever" in url_lower:
+        return "lever"
+    if "smartrecruiters" in url_lower:
+        return "smartrecruiters"
+    if "icims" in url_lower:
+        return "icims"
+    if "taleo" in url_lower:
+        return "taleo"
+    if "successfactors" in url_lower:
+        return "successfactors"
+    if "reed.co.uk" in url_lower:
+        return "reed"
     return "unknown"
 
 
-async def handle_external_apply(page: Page, context: BrowserContext, job: dict, mode: str = "apply") -> dict:
-    """Handle external application flow.
-
-    Detects the ATS and routes to the appropriate handler.
+async def handle_external_apply(
+    page: Page, job: dict, cover_letter_path: Path = None
+) -> str:
     """
-    result = {"status": "failed", "notes": "", "questions": []}
+    Handle external application. Detects ATS and delegates to appropriate handler.
+    Returns: "applied", "failed", "skipped", "review"
+    """
+    job_url = job["url"]
+    job_id = job["id"]
+    company = job.get("company", "Unknown")
 
     try:
-        # Navigate to job URL on LinkedIn first
-        await page.goto(job["url"], wait_until="domcontentloaded")
-        await random_delay(2, 4)
+        # For LinkedIn jobs, first navigate to the job and click Apply
+        if "linkedin.com" in job_url:
+            await page.goto(job_url, wait_until="domcontentloaded")
+            await random_delay(10, 20)
 
-        # Find the Apply button (external)
-        apply_btn = await find_external_apply_button(page)
-        if not apply_btn:
-            result["status"] = "skipped"
-            result["notes"] = "No external Apply button found"
-            return result
+            # Click the Apply button (which opens external link)
+            apply_btn = page.locator(
+                'button:has-text("Apply"), a:has-text("Apply")'
+            ).first
 
-        # Click Apply — might open new tab
-        async with context.expect_page() as new_page_info:
-            await apply_btn.click()
+            if await apply_btn.is_visible(timeout=5000):
+                # This might open a new tab
+                async with page.context.expect_page() as new_page_info:
+                    await apply_btn.click()
+                    await random_delay(5, 10)
 
-        try:
-            new_page = await asyncio.wait_for(new_page_info.value, timeout=10)
-            await new_page.wait_for_load_state("domcontentloaded")
-            target_page = new_page
-        except (asyncio.TimeoutError, Exception):
-            # No new tab — might have redirected in same tab
-            target_page = page
-            await random_delay(2, 3)
-
-        external_url = target_page.url
-        ats = detect_ats(external_url)
-        print(f"[external] Detected ATS: {ats} for {job['company']} ({external_url[:80]}...)")
-
-        if mode == "scan":
-            questions = await scan_external_form(target_page, ats)
-            result["status"] = "scanned"
-            result["questions"] = questions
-            result["notes"] = f"Scanned {ats} form, found {len(questions)} questions"
+                try:
+                    new_page = await new_page_info.value
+                    await new_page.wait_for_load_state("domcontentloaded")
+                    page = new_page  # Work on the new tab
+                    await random_delay(8, 15)
+                except Exception:
+                    # Didn't open new tab, might have navigated
+                    await random_delay(8, 15)
         else:
-            # Route to appropriate handler
-            if ats == "workday":
-                result = await handle_workday(target_page, job)
-            elif ats == "greenhouse":
-                result = await handle_greenhouse(target_page, job)
-            elif ats == "lever":
-                result = await handle_lever(target_page, job)
-            elif ats == "reed":
-                result = await handle_reed(target_page, job)
-            else:
-                result = await handle_generic_ats(target_page, job)
+            # Direct external URL (e.g., Reed jobs)
+            await page.goto(job_url, wait_until="domcontentloaded")
+            await random_delay(10, 20)
 
-        # Close new tab if we opened one
-        if target_page != page:
-            await target_page.close()
+        current_url = page.url
+        ats = detect_ats(current_url)
+        print(f"    🔗 External application — ATS: {ats}")
 
+        # Route to appropriate handler
+        if ats == "workday":
+            return await handle_workday(page, job, cover_letter_path)
+        elif ats == "greenhouse":
+            return await handle_greenhouse(page, job, cover_letter_path)
+        elif ats == "lever":
+            return await handle_lever(page, job, cover_letter_path)
+        elif ats == "smartrecruiters":
+            return await handle_smartrecruiters(page, job, cover_letter_path)
+        elif ats == "reed":
+            return await handle_reed(page, job, cover_letter_path)
+        else:
+            return await handle_generic_form(page, job, cover_letter_path)
+
+    except PlaywrightTimeout:
+        print(f"  ❌ Timeout on external application for job #{job_id}")
+        await take_screenshot(page, job_id, "external_timeout")
+        return "failed"
     except Exception as e:
-        result["notes"] = f"External apply error: {str(e)[:200]}"
-
-    return result
-
-
-async def find_external_apply_button(page: Page):
-    """Find the Apply button that redirects to an external site."""
-    selectors = [
-        'a[class*="apply-button"]',
-        'button[class*="apply-button"]',
-        'a:has-text("Apply")',
-        'button:has-text("Apply")',
-        '[class*="jobs-apply-button"]',
-    ]
-    for selector in selectors:
-        btn = await page.query_selector(selector)
-        if btn:
-            text = (await btn.inner_text()).strip().lower()
-            # Make sure it's NOT "Easy Apply"
-            if "easy apply" not in text and "apply" in text:
-                return btn
-
-    # Fallback
-    buttons = await page.query_selector_all('a, button')
-    for btn in buttons:
-        text = (await btn.inner_text()).strip().lower()
-        if text == "apply" or text == "apply now" or text == "apply on company website":
-            return btn
-
-    return None
+        print(f"  ❌ External application error for job #{job_id}: {e}")
+        await take_screenshot(page, job_id, "external_error")
+        return "failed"
 
 
-async def scan_external_form(page: Page, ats: str) -> List[dict]:
-    """Scan an external form for questions without filling."""
-    await random_delay(2, 4)
-    questions = await scan_form_questions(page)
-    return questions
+async def handle_workday(page: Page, job: dict, cover_letter_path: Path) -> str:
+    """Handle Workday applications — multi-page, unlimited depth."""
+    answers = get_answers()
+    personal = answers["personal"]
+    max_pages = 30  # Safety limit
 
+    for page_num in range(max_pages):
+        await random_delay(8, 15)
+        print(f"    📄 Workday page {page_num + 1}")
 
-async def handle_workday(page: Page, job: dict) -> dict:
-    """Handle Workday application forms."""
-    result = {"status": "failed", "notes": "", "questions": []}
-    answers = get_application_answers()
+        # Fill all visible form fields
+        await fill_all_visible_fields(page, cover_letter_path)
 
-    try:
-        await random_delay(2, 4)
+        # Handle file uploads
+        await handle_file_uploads(page, cover_letter_path)
 
-        # Workday often requires creating an account first
-        # Look for "Apply Manually" or "Autofill with Resume"
-        autofill_btn = await page.query_selector('button:has-text("Autofill"), button:has-text("Upload")')
-        if autofill_btn:
-            await autofill_btn.click()
-            await random_delay(1, 2)
+        # Look for Next/Continue/Submit button
+        submit_btn = page.locator(
+            'button:has-text("Submit"), '
+            'button[data-automation-id="bottom-navigation-next-button"]'
+        ).first
 
-            # Upload resume
-            file_input = await page.query_selector('input[type="file"]')
-            if file_input:
-                await file_input.set_input_files(RESUME_PATH)
+        next_btn = page.locator(
+            'button:has-text("Next"), '
+            'button:has-text("Continue"), '
+            'button:has-text("Save and Continue"), '
+            'button[data-automation-id="bottom-navigation-next-button"]'
+        ).first
+
+        # Check if this is the final submit page
+        page_text = (await page.inner_text("body")).lower()
+        if "review" in page_text and "submit" in page_text:
+            if MODE == "review":
+                print(f"    👁️  Workday — ready for review (job #{job['id']})")
+                await take_screenshot(page, job["id"], "workday_review")
+                response = await asyncio.get_event_loop().run_in_executor(
+                    None, lambda: input("      Submit? (enter/skip): ")
+                )
+                if response.strip().lower() == "skip":
+                    return "skipped"
+
+            if await submit_btn.is_visible(timeout=3000):
+                await submit_btn.click()
+                await random_delay(10, 15)
+                return "applied"
+
+        # Click Next to go to the next page
+        if await next_btn.is_visible(timeout=5000):
+            await next_btn.click()
+            await random_delay(10, 15)
+
+            # Check for validation errors
+            errors = page.locator('[data-automation-id="errorMessage"], .error-message')
+            if await errors.count() > 0:
+                print(f"    ⚠️  Validation errors on page {page_num + 1}")
+                # Try filling again
+                await fill_all_visible_fields(page, cover_letter_path)
                 await random_delay(3, 5)
-
-        # Fill form fields
-        unknown = await detect_and_fill_fields(page, job)
-        result["questions"] = unknown
-
-        # Upload cover letter if available
-        await upload_cover_letter_external(page, job)
-
-        # Look for Submit
-        submit_btn = await page.query_selector('button:has-text("Submit"), button[type="submit"]')
-        if submit_btn:
-            await submit_btn.click()
-            await random_delay(3, 5)
-            result["status"] = "applied"
-            result["notes"] = "Applied via Workday"
+                await next_btn.click()
+                await random_delay(10, 15)
         else:
-            result["notes"] = "Workday: Could not find Submit button"
+            # No next button — check if we're done or stuck
+            if "thank" in page_text or "submitted" in page_text or "confirmation" in page_text:
+                return "applied"
+            print(f"    ⚠️  No Next button on Workday page {page_num + 1}")
+            await take_screenshot(page, job["id"], f"workday_stuck_p{page_num}")
+            return "failed"
 
-    except Exception as e:
-        result["notes"] = f"Workday error: {str(e)[:150]}"
-
-    return result
+    return "failed"
 
 
-async def handle_greenhouse(page: Page, job: dict) -> dict:
-    """Handle Greenhouse application forms."""
-    result = {"status": "failed", "notes": "", "questions": []}
+async def handle_greenhouse(page: Page, job: dict, cover_letter_path: Path) -> str:
+    """Handle Greenhouse applications — typically single long page."""
+    await random_delay(8, 12)
+    print("    🌱 Greenhouse form detected")
 
-    try:
-        await random_delay(2, 4)
+    # Greenhouse is typically a single page with all fields
+    await fill_all_visible_fields(page, cover_letter_path)
+    await handle_file_uploads(page, cover_letter_path)
+    await random_delay(5, 8)
 
-        # Greenhouse typically has a simple form
-        # Fill name fields
-        answers = get_application_answers()
-        personal = answers.get("personal", {})
+    # Submit
+    submit_btn = page.locator(
+        'button[type="submit"], '
+        'input[type="submit"], '
+        'button:has-text("Submit Application"), '
+        'button:has-text("Submit")'
+    ).first
 
-        # Common Greenhouse field IDs
-        field_map = {
-            '#first_name': personal.get("first_name", ""),
-            '#last_name': personal.get("last_name", ""),
-            '#email': personal.get("email", ""),
-            '#phone': personal.get("phone", ""),
-        }
+    if await submit_btn.is_visible(timeout=5000):
+        if MODE == "review":
+            await take_screenshot(page, job["id"], "greenhouse_review")
+            response = await asyncio.get_event_loop().run_in_executor(
+                None, lambda: input("      Submit Greenhouse app? (enter/skip): ")
+            )
+            if response.strip().lower() == "skip":
+                return "skipped"
 
-        for selector, value in field_map.items():
-            el = await page.query_selector(selector)
-            if el and value:
-                await el.fill(value)
-                await random_delay(0.3, 0.7)
+        await random_delay(3, 6)
+        await submit_btn.click()
+        await random_delay(10, 15)
 
-        # Upload resume
-        resume_input = await page.query_selector('input[type="file"][id*="resume"], input[name*="resume"]')
-        if not resume_input:
-            resume_input = await page.query_selector('input[type="file"]')
-        if resume_input:
-            await resume_input.set_input_files(RESUME_PATH)
-            await random_delay(2, 3)
+        # Check for success
+        page_text = (await page.inner_text("body")).lower()
+        if "thank" in page_text or "submitted" in page_text or "received" in page_text:
+            return "applied"
+        return "applied"  # Optimistic
 
-        # Upload cover letter
-        await upload_cover_letter_external(page, job)
+    return "failed"
 
-        # Fill additional questions
-        unknown = await detect_and_fill_fields(page, job)
-        result["questions"] = unknown
 
-        # Submit
-        submit_btn = await page.query_selector('input[type="submit"], button[type="submit"], button:has-text("Submit")')
-        if submit_btn:
-            await submit_btn.click()
-            await random_delay(3, 5)
-            result["status"] = "applied"
-            result["notes"] = "Applied via Greenhouse"
+async def handle_lever(page: Page, job: dict, cover_letter_path: Path) -> str:
+    """Handle Lever applications — usually single page."""
+    await random_delay(8, 12)
+    print("    🔧 Lever form detected")
+
+    # Click Apply if there's an apply button first
+    apply_btn = page.locator('a:has-text("Apply"), button:has-text("Apply")').first
+    if await apply_btn.is_visible(timeout=3000):
+        await apply_btn.click()
+        await random_delay(8, 12)
+
+    await fill_all_visible_fields(page, cover_letter_path)
+    await handle_file_uploads(page, cover_letter_path)
+    await random_delay(5, 8)
+
+    submit_btn = page.locator(
+        'button:has-text("Submit application"), '
+        'button:has-text("Submit"), '
+        'button[type="submit"]'
+    ).first
+
+    if await submit_btn.is_visible(timeout=5000):
+        if MODE == "review":
+            await take_screenshot(page, job["id"], "lever_review")
+            response = await asyncio.get_event_loop().run_in_executor(
+                None, lambda: input("      Submit Lever app? (enter/skip): ")
+            )
+            if response.strip().lower() == "skip":
+                return "skipped"
+
+        await random_delay(3, 5)
+        await submit_btn.click()
+        await random_delay(10, 15)
+        return "applied"
+
+    return "failed"
+
+
+async def handle_smartrecruiters(page: Page, job: dict, cover_letter_path: Path) -> str:
+    """Handle SmartRecruiters — multi-step."""
+    max_pages = 20
+    print("    🧠 SmartRecruiters form detected")
+
+    for page_num in range(max_pages):
+        await random_delay(8, 12)
+        await fill_all_visible_fields(page, cover_letter_path)
+        await handle_file_uploads(page, cover_letter_path)
+
+        # Check for submit
+        page_text = (await page.inner_text("body")).lower()
+        if "review" in page_text and "submit" in page_text:
+            submit_btn = page.locator('button:has-text("Submit")').first
+            if await submit_btn.is_visible(timeout=3000):
+                if MODE == "review":
+                    await take_screenshot(page, job["id"], "sr_review")
+                    response = await asyncio.get_event_loop().run_in_executor(
+                        None, lambda: input("      Submit? (enter/skip): ")
+                    )
+                    if response.strip().lower() == "skip":
+                        return "skipped"
+                await submit_btn.click()
+                await random_delay(10, 15)
+                return "applied"
+
+        # Next button
+        next_btn = page.locator(
+            'button:has-text("Next"), button:has-text("Continue")'
+        ).first
+        if await next_btn.is_visible(timeout=5000):
+            await next_btn.click()
+            await random_delay(10, 15)
         else:
-            result["notes"] = "Greenhouse: Could not find Submit button"
+            if "thank" in page_text or "submitted" in page_text:
+                return "applied"
+            return "failed"
 
-    except Exception as e:
-        result["notes"] = f"Greenhouse error: {str(e)[:150]}"
-
-    return result
+    return "failed"
 
 
-async def handle_lever(page: Page, job: dict) -> dict:
-    """Handle Lever application forms."""
-    result = {"status": "failed", "notes": "", "questions": []}
+async def handle_reed(page: Page, job: dict, cover_letter_path: Path) -> str:
+    """Handle Reed.co.uk applications."""
+    await random_delay(8, 12)
+    print("    📋 Reed.co.uk job detected")
 
-    try:
-        await random_delay(2, 4)
+    # Reed usually has an "Apply" button that leads to their own form
+    apply_btn = page.locator(
+        'a:has-text("Apply"), button:has-text("Apply")'
+    ).first
 
-        # Click "Apply for this job" if visible
-        apply_btn = await page.query_selector('a:has-text("Apply"), button:has-text("Apply")')
-        if apply_btn:
-            await apply_btn.click()
-            await random_delay(2, 3)
+    if await apply_btn.is_visible(timeout=5000):
+        await apply_btn.click()
+        await random_delay(10, 15)
 
-        # Fill standard Lever fields
-        answers = get_application_answers()
-        personal = answers.get("personal", {})
+    # Fill Reed's application form (multi-page possible)
+    max_pages = 10
+    for page_num in range(max_pages):
+        await fill_all_visible_fields(page, cover_letter_path)
+        await handle_file_uploads(page, cover_letter_path)
+        await random_delay(5, 8)
 
-        field_map = {
-            'input[name="name"]': personal.get("full_name", ""),
-            'input[name="email"]': personal.get("email", ""),
-            'input[name="phone"]': personal.get("phone", ""),
-            'input[name="org"]': answers.get("employment", {}).get("current_employer", ""),
-            'input[name="urls[LinkedIn]"]': personal.get("linkedin_url", ""),
-        }
+        # Submit or Next
+        submit_btn = page.locator('button:has-text("Submit"), button:has-text("Send")').first
+        next_btn = page.locator('button:has-text("Next"), button:has-text("Continue")').first
 
-        for selector, value in field_map.items():
-            el = await page.query_selector(selector)
-            if el and value:
-                await el.fill(value)
-                await random_delay(0.3, 0.7)
-
-        # Upload resume
-        resume_input = await page.query_selector('input[name="resume"]')
-        if not resume_input:
-            resume_input = await page.query_selector('input[type="file"]')
-        if resume_input:
-            await resume_input.set_input_files(RESUME_PATH)
-            await random_delay(2, 3)
-
-        # Upload cover letter
-        cover_input = await page.query_selector('input[name="coverLetter"], input[name="cover_letter"]')
-        if cover_input:
-            cover_path = get_cover_letter_pdf_path(job)
-            await cover_input.set_input_files(cover_path)
-            await random_delay(1, 2)
-
-        # Fill additional fields
-        unknown = await detect_and_fill_fields(page, job)
-        result["questions"] = unknown
-
-        # Submit
-        submit_btn = await page.query_selector('button[type="submit"], button:has-text("Submit")')
-        if submit_btn:
+        if await submit_btn.is_visible(timeout=3000):
+            if MODE == "review":
+                await take_screenshot(page, job["id"], "reed_review")
+                response = await asyncio.get_event_loop().run_in_executor(
+                    None, lambda: input("      Submit Reed app? (enter/skip): ")
+                )
+                if response.strip().lower() == "skip":
+                    return "skipped"
             await submit_btn.click()
-            await random_delay(3, 5)
-            result["status"] = "applied"
-            result["notes"] = "Applied via Lever"
+            await random_delay(10, 15)
+            return "applied"
+        elif await next_btn.is_visible(timeout=3000):
+            await next_btn.click()
+            await random_delay(10, 15)
         else:
-            result["notes"] = "Lever: Could not find Submit button"
+            page_text = (await page.inner_text("body")).lower()
+            if "thank" in page_text or "submitted" in page_text:
+                return "applied"
+            return "failed"
 
-    except Exception as e:
-        result["notes"] = f"Lever error: {str(e)[:150]}"
-
-    return result
+    return "failed"
 
 
-async def handle_reed(page: Page, job: dict) -> dict:
-    """Handle Reed.co.uk application forms."""
-    result = {"status": "failed", "notes": "", "questions": []}
+async def handle_generic_form(page: Page, job: dict, cover_letter_path: Path) -> str:
+    """Generic form handler for unknown ATS systems. Unlimited page depth."""
+    max_pages = 30  # Safety limit
+    print("    📝 Generic form handler (unknown ATS)")
 
-    try:
-        await random_delay(2, 4)
+    for page_num in range(max_pages):
+        await random_delay(8, 15)
+        print(f"    📄 Form page {page_num + 1}")
 
-        # Reed usually has an "Apply now" button
-        apply_btn = await page.query_selector('a:has-text("Apply now"), button:has-text("Apply")')
-        if apply_btn:
-            await apply_btn.click()
-            await random_delay(2, 3)
+        # Fill all visible form fields
+        await fill_all_visible_fields(page, cover_letter_path)
+        await handle_file_uploads(page, cover_letter_path)
+        await random_delay(5, 8)
 
-        # Reed may require login — fill form if present
-        unknown = await detect_and_fill_fields(page, job)
-        result["questions"] = unknown
+        page_text = (await page.inner_text("body")).lower()
 
-        # Upload CV if option exists
-        file_input = await page.query_selector('input[type="file"]')
-        if file_input:
-            await file_input.set_input_files(RESUME_PATH)
-            await random_delay(2, 3)
+        # Check if this is a confirmation/success page
+        if any(kw in page_text for kw in ["thank you", "submitted", "confirmation", "received your application"]):
+            return "applied"
 
-        # Add cover letter text if textarea available
-        cover_textarea = await page.query_selector('textarea[name*="cover"], textarea[id*="cover"]')
-        if cover_textarea:
-            from cover_letter_manager import find_cover_letter_for_job
-            letter = find_cover_letter_for_job(job)
-            if letter:
-                await cover_textarea.fill(letter)
+        # Look for Submit button
+        submit_btn = page.locator(
+            'button:has-text("Submit"), '
+            'input[type="submit"], '
+            'button:has-text("Send Application"), '
+            'button:has-text("Complete"), '
+            'button:has-text("Finish")'
+        ).first
 
-        # Submit
-        submit_btn = await page.query_selector('button[type="submit"], input[type="submit"], button:has-text("Apply")')
-        if submit_btn:
+        # Look for Next/Continue button
+        next_btn = page.locator(
+            'button:has-text("Next"), '
+            'button:has-text("Continue"), '
+            'button:has-text("Save and Continue"), '
+            'button:has-text("Proceed"), '
+            'a:has-text("Next")'
+        ).first
+
+        # Prefer submit if visible on a "review" type page
+        if await submit_btn.is_visible(timeout=3000):
+            if MODE == "review":
+                await take_screenshot(page, job["id"], f"generic_review_p{page_num}")
+                response = await asyncio.get_event_loop().run_in_executor(
+                    None, lambda: input("      Submit? (enter/skip): ")
+                )
+                if response.strip().lower() == "skip":
+                    return "skipped"
+
+            await random_delay(3, 5)
             await submit_btn.click()
-            await random_delay(3, 5)
-            result["status"] = "applied"
-            result["notes"] = "Applied via Reed"
+            await random_delay(10, 15)
+
+            # Verify submission
+            new_text = (await page.inner_text("body")).lower()
+            if any(kw in new_text for kw in ["thank", "submitted", "confirmation", "received"]):
+                return "applied"
+            return "applied"  # Optimistic
+
+        elif await next_btn.is_visible(timeout=3000):
+            await next_btn.click()
+            await random_delay(10, 15)
         else:
-            result["notes"] = "Reed: Could not find Submit button"
+            # No navigation buttons — might be stuck
+            print(f"    ⚠️  No Next/Submit on page {page_num + 1}")
+            await take_screenshot(page, job["id"], f"generic_stuck_p{page_num}")
+            return "failed"
 
-    except Exception as e:
-        result["notes"] = f"Reed error: {str(e)[:150]}"
-
-    return result
+    return "failed"
 
 
-async def handle_generic_ats(page: Page, job: dict) -> dict:
-    """Generic handler for unknown ATS systems."""
-    result = {"status": "failed", "notes": "", "questions": []}
+async def fill_all_visible_fields(page: Page, cover_letter_path: Path):
+    """Fill all visible form fields on the current page."""
+    answers = get_answers()
+    personal = answers["personal"]
 
-    try:
-        await random_delay(2, 4)
+    # Text inputs
+    inputs = await page.locator(
+        'input[type="text"]:visible, '
+        'input[type="email"]:visible, '
+        'input[type="tel"]:visible, '
+        'input[type="number"]:visible, '
+        'input[type="url"]:visible, '
+        'textarea:visible'
+    ).all()
 
-        # Upload resume if file input exists
-        file_inputs = await page.query_selector_all('input[type="file"]')
-        if file_inputs:
-            # First file input usually for resume
-            await file_inputs[0].set_input_files(RESUME_PATH)
-            await random_delay(2, 3)
+    for input_el in inputs:
+        try:
+            # Skip if already filled
+            current = await input_el.input_value()
+            if current.strip():
+                continue
 
-            # Second file input for cover letter
-            if len(file_inputs) > 1:
-                cover_path = get_cover_letter_pdf_path(job)
-                await file_inputs[1].set_input_files(cover_path)
+            # Get label
+            label_text = await get_field_label(page, input_el)
+            if label_text:
+                await fill_text_field(page, input_el, label_text)
+                await random_delay(1, 3)
+        except Exception:
+            continue
+
+    # Dropdowns
+    selects = await page.locator("select:visible").all()
+    for select in selects:
+        try:
+            label_text = await get_field_label(page, select)
+            if label_text:
+                await handle_dropdown(page, select, label_text)
                 await random_delay(1, 2)
+        except Exception:
+            continue
 
-        # Fill all detectable fields
-        unknown = await detect_and_fill_fields(page, job)
-        result["questions"] = unknown
-
-        # Try to find submit
-        submit_btn = await page.query_selector(
-            'button[type="submit"], input[type="submit"], '
-            'button:has-text("Submit"), button:has-text("Apply")'
-        )
-        if submit_btn:
-            await submit_btn.click()
-            await random_delay(3, 5)
-            result["status"] = "applied"
-            result["notes"] = f"Applied via generic handler (URL: {page.url[:60]})"
-        else:
-            result["status"] = "failed"
-            result["notes"] = f"Generic ATS: Could not find Submit button ({page.url[:60]})"
-
-    except Exception as e:
-        result["notes"] = f"Generic ATS error: {str(e)[:150]}"
-
-    return result
+    # Radio buttons
+    fieldsets = await page.locator("fieldset:visible").all()
+    for fieldset in fieldsets:
+        try:
+            legend = fieldset.locator("legend, label").first
+            if await legend.count() > 0:
+                label_text = await legend.inner_text()
+                await handle_radio_buttons(page, fieldset, label_text)
+                await random_delay(1, 2)
+        except Exception:
+            continue
 
 
-async def upload_cover_letter_external(page: Page, job: dict):
-    """Try to upload a cover letter on an external ATS form."""
-    # Look for cover letter file input
-    file_inputs = await page.query_selector_all('input[type="file"]')
+async def handle_file_uploads(page: Page, cover_letter_path: Path):
+    """Handle all file upload inputs on the page."""
+    file_inputs = await page.locator('input[type="file"]:visible').all()
+
+    # Also check for hidden file inputs (common pattern)
+    if not file_inputs:
+        file_inputs = await page.locator('input[type="file"]').all()
 
     for file_input in file_inputs:
-        # Check if this is a cover letter field (not resume)
-        parent_text = ""
         try:
-            parent = await file_input.evaluate_handle("el => el.closest('div')")
-            parent_text = (await parent.inner_text()).lower()
+            # Determine type from surrounding text
+            parent = file_input.locator("xpath=ancestor::div[position()<=3]").first
+            parent_text = ""
+            try:
+                parent_text = (await parent.inner_text()).lower()
+            except Exception:
+                pass
+
+            # Also check accept attribute
+            accept = await file_input.get_attribute("accept") or ""
+
+            if "resume" in parent_text or "cv" in parent_text:
+                await upload_resume(page, file_input)
+                await random_delay(3, 6)
+            elif "cover" in parent_text or "letter" in parent_text:
+                if cover_letter_path:
+                    await upload_cover_letter(page, file_input, cover_letter_path)
+                    await random_delay(3, 6)
+            else:
+                # Default: upload resume for generic file inputs
+                await upload_resume(page, file_input)
+                await random_delay(3, 6)
         except Exception:
-            pass
+            continue
 
-        label = await file_input.get_attribute("aria-label") or ""
-        name = await file_input.get_attribute("name") or ""
 
-        if any(kw in (parent_text + label + name).lower() for kw in ["cover", "letter", "additional"]):
-            cover_path = get_cover_letter_pdf_path(job)
-            await file_input.set_input_files(cover_path)
-            print(f"[external] Uploaded cover letter for {job.get('company', '')}")
-            return
+async def get_field_label(page: Page, element) -> str:
+    """Get the label text for a form field."""
+    try:
+        # Try label[for=id]
+        el_id = await element.get_attribute("id")
+        if el_id:
+            label = page.locator(f'label[for="{el_id}"]')
+            if await label.count() > 0:
+                return (await label.first.inner_text()).strip()
 
-    # If only one file input was found and resume already uploaded, look for a second upload option
-    # Some forms have "Add another document" buttons
-    add_btn = await page.query_selector('button:has-text("Add"), a:has-text("additional document")')
-    if add_btn:
-        await add_btn.click()
-        await random_delay(1, 2)
-        new_input = await page.query_selector('input[type="file"]:not([data-used])')
-        if new_input:
-            cover_path = get_cover_letter_pdf_path(job)
-            await new_input.set_input_files(cover_path)
-            print(f"[external] Uploaded cover letter (via Add button) for {job.get('company', '')}")
+        # Try aria-label
+        aria = await element.get_attribute("aria-label")
+        if aria:
+            return aria.strip()
+
+        # Try placeholder
+        placeholder = await element.get_attribute("placeholder")
+        if placeholder:
+            return placeholder.strip()
+
+        # Try name attribute
+        name = await element.get_attribute("name")
+        if name:
+            return name.replace("_", " ").replace("-", " ").strip()
+
+        # Try nearby label
+        parent = element.locator("xpath=ancestor::div[position()<=2]").first
+        label = parent.locator("label").first
+        if await label.count() > 0:
+            return (await label.inner_text()).strip()
+
+    except Exception:
+        pass
+
+    return ""
+
+
+async def take_screenshot(page: Page, job_id: int, suffix: str):
+    """Take a screenshot for debugging."""
+    SCREENSHOTS_DIR.mkdir(parents=True, exist_ok=True)
+    path = SCREENSHOTS_DIR / f"job_{job_id}_{suffix}.png"
+    try:
+        await page.screenshot(path=str(path), full_page=True)
+    except Exception:
+        pass

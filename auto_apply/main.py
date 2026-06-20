@@ -1,246 +1,177 @@
-"""Main orchestrator — runs the job application automation."""
+"""Main entry point — orchestrates the job application flow."""
 
 import asyncio
-import json
 import random
 import sys
-from datetime import datetime
-from pathlib import Path
 
 from playwright.async_api import async_playwright
 
 from config import (
-    parse_jobs_from_md,
-    save_jobs_json,
+    load_jobs,
     MAX_APPS_PER_HOUR,
     MIN_DELAY_SECONDS,
     MAX_DELAY_SECONDS,
     MODE,
-    SCREENSHOTS_DIR,
-    SCANNED_QUESTIONS_PATH,
+    JOBS_JSON,
+    DATA_DIR,
+    COVER_LETTER_DIR,
 )
-from browser import create_browser_context, ensure_logged_in, save_session
+from browser import create_browser_context, ensure_logged_in
 from linkedin_apply import handle_easy_apply
-from external_apply import handle_external_apply, detect_ats
+from external_apply import handle_external_apply
+from cover_letter_manager import parse_cover_letters, get_cover_letter_pdf
 from humanizer import (
-    random_delay,
-    simulate_reading,
-    check_rate_limit,
-    record_application,
+    RateLimiter,
     inter_application_delay,
+    simulate_reading,
+    random_delay,
 )
-from logger import log_application, get_applied_job_ids, print_summary, init_log
+from logger import log_application, get_applied_urls, print_summary, ensure_log_exists
 
 
 async def main():
-    """Main entry point."""
-    mode = MODE
-    if len(sys.argv) > 1:
-        mode = sys.argv[1]  # Allow override: python main.py scan
+    """Main application loop."""
+    print("=" * 60)
+    print("  LINKEDIN JOB APPLICATION AUTOMATION")
+    print("  Mode:", MODE.upper())
+    print("=" * 60)
 
-    print(f"\n{'='*60}")
-    print(f"  NIDHI SHETTY — LinkedIn Job Application Bot")
-    print(f"  Mode: {mode.upper()}")
-    print(f"  Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"{'='*60}\n")
+    # Generate jobs.json if it doesn't exist
+    if not JOBS_JSON.exists():
+        print("\n📋 Generating jobs.json from jobs_50.md...")
+        from config import parse_jobs_from_markdown
+        jobs_md = COVER_LETTER_DIR / "jobs_50.md"
+        if jobs_md.exists():
+            jobs = parse_jobs_from_markdown(str(jobs_md))
+            DATA_DIR.mkdir(parents=True, exist_ok=True)
+            import json
+            with open(JOBS_JSON, "w") as f:
+                json.dump(jobs, f, indent=2)
+            print(f"  Generated {len(jobs)} jobs")
+        else:
+            print(f"  ❌ jobs_50.md not found at {jobs_md}")
+            sys.exit(1)
 
-    # Parse jobs
-    jobs = parse_jobs_from_md()
-    save_jobs_json(jobs)
-    print(f"[main] Loaded {len(jobs)} jobs from jobs_50.md")
+    # Load data
+    jobs = load_jobs()
+    cover_letters = parse_cover_letters()
+    already_applied = get_applied_urls()
+    ensure_log_exists()
+
+    print(f"\n📊 Jobs loaded: {len(jobs)}")
+    print(f"📝 Cover letters available: {len(cover_letters)}")
+    print(f"✅ Already applied: {len(already_applied)}")
 
     # Filter out already-applied jobs
-    applied_ids = get_applied_job_ids()
-    if applied_ids:
-        print(f"[main] Skipping {len(applied_ids)} already-applied jobs")
-        jobs = [j for j in jobs if j["id"] not in applied_ids]
+    remaining_jobs = [j for j in jobs if j["url"] not in already_applied]
+    print(f"🎯 Remaining to apply: {len(remaining_jobs)}")
 
-    if not jobs:
-        print("[main] No new jobs to process!")
+    if not remaining_jobs:
+        print("\n🎉 All jobs have been applied to!")
+        print_summary()
         return
 
-    # Initialize log
-    init_log()
+    # Shuffle to avoid sequential patterns (but keep priority ordering somewhat)
+    # Sort by priority first (HIGH first), then shuffle within each priority group
+    high = [j for j in remaining_jobs if "HIGH" in j.get("priority", "") or "🟢" in j.get("priority", "")]
+    medium = [j for j in remaining_jobs if "MEDIUM" in j.get("priority", "") or "🟡" in j.get("priority", "")]
+    lower = [j for j in remaining_jobs if j not in high and j not in medium]
+    random.shuffle(high)
+    random.shuffle(medium)
+    random.shuffle(lower)
+    ordered_jobs = high + medium + lower
 
-    # Launch browser
+    print(f"\n  Priority order: {len(high)} HIGH, {len(medium)} MEDIUM, {len(lower)} LOWER")
+    print(f"\n{'='*60}")
+
+    # Initialize rate limiter
+    rate_limiter = RateLimiter(max_per_hour=MAX_APPS_PER_HOUR)
+
     async with async_playwright() as playwright:
         browser, context = await create_browser_context(playwright)
-        page = await context.new_page()
+        page = await ensure_logged_in(context)
 
-        # Check if we're dealing with LinkedIn jobs or Reed jobs
-        linkedin_jobs = [j for j in jobs if "linkedin.com" in j["url"]]
-        reed_jobs = [j for j in jobs if "reed.co.uk" in j["url"]]
+        applied_count = 0
+        failed_count = 0
 
-        # Login to LinkedIn if we have LinkedIn jobs
-        if linkedin_jobs:
-            logged_in = await ensure_logged_in(page)
-            if not logged_in:
-                print("[main] ERROR: Could not log in to LinkedIn.")
-                print("[main] Please set LINKEDIN_PASSWORD in .env and restart.")
-                await browser.close()
-                return
-
-        # Shuffle jobs to avoid sequential patterns (but keep priority order)
-        # Sort by priority first, then shuffle within each priority group
-        high_priority = [j for j in jobs if "HIGH" in j.get("priority", "") or "🟢" in j.get("priority", "")]
-        med_priority = [j for j in jobs if "MEDIUM" in j.get("priority", "") or "🟡" in j.get("priority", "")]
-        low_priority = [j for j in jobs if "LOWER" in j.get("priority", "") or "🟠" in j.get("priority", "")]
-
-        random.shuffle(high_priority)
-        random.shuffle(med_priority)
-        random.shuffle(low_priority)
-
-        ordered_jobs = high_priority + med_priority + low_priority
-        print(f"[main] Processing order: {len(high_priority)} HIGH, {len(med_priority)} MEDIUM, {len(low_priority)} LOWER priority")
-
-        # Track scanned questions for review
-        all_scanned_questions = {}
-
-        # Process each job
-        for i, job in enumerate(ordered_jobs, 1):
+        for idx, job in enumerate(ordered_jobs):
             job_id = job["id"]
-            company = job["company"]
-            title = job["title"]
+            company = job.get("company", "Unknown")
+            title = job.get("title", "Unknown")
+            url = job["url"]
 
-            print(f"\n[{i}/{len(ordered_jobs)}] #{job_id} — {title} @ {company}")
-            print(f"  URL: {job['url'][:80]}...")
+            print(f"\n{'─'*60}")
+            print(f"  [{idx+1}/{len(ordered_jobs)}] Job #{job_id}: {title}")
+            print(f"  Company: {company}")
+            print(f"  URL: {url[:80]}...")
 
-            # Rate limiting (only in apply mode)
-            if mode == "apply":
-                if not check_rate_limit(MAX_APPS_PER_HOUR):
-                    print(f"  ⏸️  Rate limit reached. Waiting...")
-                    await asyncio.sleep(3600 / MAX_APPS_PER_HOUR)
+            # Rate limiting
+            if not rate_limiter.can_apply():
+                wait = rate_limiter.wait_time()
+                print(f"  ⏳ Rate limit reached — waiting {wait:.0f}s")
+                await asyncio.sleep(wait)
 
-            try:
-                # Determine application method
-                if "linkedin.com" in job["url"]:
-                    # Navigate and detect Easy Apply vs External
-                    await page.goto(job["url"], wait_until="domcontentloaded")
-                    await random_delay(2, 4)
+            # Get cover letter for this job
+            cover_letter_path = get_cover_letter_pdf(job, cover_letters)
+            if cover_letter_path:
+                print(f"  📄 Cover letter: {cover_letter_path.name}")
+            else:
+                print(f"  📄 Cover letter: generic")
 
-                    # Simulate reading the job
-                    if mode == "apply":
-                        await simulate_reading(page, random.uniform(5, 15))
+            # Determine application method
+            is_linkedin = "linkedin.com" in url
+            result = "failed"
 
-                    # Check for Easy Apply button
-                    easy_apply_btn = await page.query_selector(
-                        'button[class*="jobs-apply-button"]'
-                    )
-                    btn_text = ""
-                    if easy_apply_btn:
-                        btn_text = (await easy_apply_btn.inner_text()).strip().lower()
+            if is_linkedin:
+                # Try Easy Apply first
+                result = await handle_easy_apply(page, job, cover_letter_path)
 
-                    if easy_apply_btn and "easy apply" in btn_text:
-                        print(f"  📋 Method: Easy Apply")
-                        result = await handle_easy_apply(page, job, mode=mode)
-                        method = "easy_apply"
-                    else:
-                        print(f"  🔗 Method: External Application")
-                        result = await handle_external_apply(page, context, job, mode=mode)
-                        method = "external"
+                # If it returned "external", handle as external
+                if result == "external":
+                    print(f"  🔗 Redirecting to external application...")
+                    result = await handle_external_apply(page, job, cover_letter_path)
+            else:
+                # Direct external URL (Reed, etc.)
+                result = await handle_external_apply(page, job, cover_letter_path)
 
-                elif "reed.co.uk" in job["url"]:
-                    print(f"  🔗 Method: Reed.co.uk")
-                    new_page = await context.new_page()
-                    await new_page.goto(job["url"], wait_until="domcontentloaded")
-                    await random_delay(2, 4)
+            # Log result
+            method = "easy_apply" if is_linkedin and result != "external" else "external"
+            log_application(
+                job_id=job_id,
+                company=company,
+                title=title,
+                url=url,
+                method=method,
+                status=result,
+            )
 
-                    from external_apply import handle_reed
-                    if mode == "scan":
-                        from form_filler import scan_form_questions
-                        questions = await scan_form_questions(new_page)
-                        result = {"status": "scanned", "notes": f"Scanned Reed page", "questions": questions}
-                    else:
-                        result = await handle_reed(new_page, job)
+            # Track counts
+            if result == "applied":
+                applied_count += 1
+                rate_limiter.record_application()
+                print(f"  ✅ SUCCESS — Total applied: {applied_count}")
+            elif result == "failed":
+                failed_count += 1
+                print(f"  ❌ FAILED — Total failed: {failed_count}")
+            elif result == "expired":
+                print(f"  ⏰ EXPIRED")
+            elif result == "skipped":
+                print(f"  ⏭️  SKIPPED")
 
-                    await new_page.close()
-                    method = "reed"
-                else:
-                    print(f"  ⚠️  Unknown job source — skipping")
-                    result = {"status": "skipped", "notes": "Unknown job URL format"}
-                    method = "unknown"
-
-                # Log result
-                status = result.get("status", "failed")
-                notes = result.get("notes", "")
-                log_application(job, method, status, notes)
-
-                # Track questions from scan mode
-                if mode == "scan" and result.get("questions"):
-                    all_scanned_questions[f"#{job_id} - {company} - {title}"] = result["questions"]
-
-                # Status emoji
-                emoji = {"applied": "✅", "scanned": "🔍", "skipped": "⏭️", "expired": "⏳", "failed": "❌"}.get(status, "❓")
-                print(f"  {emoji} Status: {status}")
-                if notes:
-                    print(f"     Notes: {notes}")
-
-                # Screenshot on failure (apply mode only)
-                if mode == "apply" and status == "failed":
-                    screenshot_path = SCREENSHOTS_DIR / f"fail_{job_id}_{company.replace(' ', '_')}.png"
-                    await page.screenshot(path=str(screenshot_path))
-                    print(f"     📸 Screenshot saved: {screenshot_path.name}")
-
-                # Record application for rate limiting
-                if status == "applied":
-                    record_application()
-
-                # Inter-application delay (only in apply mode)
-                if mode == "apply" and i < len(ordered_jobs):
-                    await inter_application_delay(MIN_DELAY_SECONDS, MAX_DELAY_SECONDS)
-                elif mode == "scan":
-                    await random_delay(3, 8)  # Lighter delay in scan mode
-
-            except Exception as e:
-                print(f"  ❌ Unexpected error: {str(e)[:200]}")
-                log_application(job, "unknown", "failed", f"Exception: {str(e)[:200]}")
-
-                # Screenshot on exception
-                try:
-                    screenshot_path = SCREENSHOTS_DIR / f"error_{job_id}_{company.replace(' ', '_')}.png"
-                    await page.screenshot(path=str(screenshot_path))
-                except Exception:
-                    pass
-
-        # Save scanned questions
-        if mode == "scan" and all_scanned_questions:
-            with open(SCANNED_QUESTIONS_PATH, "w") as f:
-                json.dump(all_scanned_questions, f, indent=2)
-            print(f"\n[main] Scanned questions saved to: {SCANNED_QUESTIONS_PATH}")
-            print_scanned_summary(all_scanned_questions)
+            # Inter-application delay (human-like)
+            if idx < len(ordered_jobs) - 1:
+                await inter_application_delay(MIN_DELAY_SECONDS, MAX_DELAY_SECONDS)
 
         # Save session state
-        await save_session(context)
+        from config import STORAGE_STATE, OUTPUT_DIR
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        await context.storage_state(path=str(STORAGE_STATE))
 
-        # Print summary
-        print_summary()
-
-        # Close browser
+        # Cleanup
         await browser.close()
 
-
-def print_scanned_summary(questions: dict):
-    """Print a summary of scanned questions for user review."""
-    print(f"\n{'='*60}")
-    print(f"  SCANNED QUESTIONS SUMMARY")
-    print(f"{'='*60}")
-
-    unknown_questions = set()
-    for job_key, job_questions in questions.items():
-        for q in job_questions:
-            if not q.get("has_answer"):
-                unknown_questions.add(q["label"])
-
-    if unknown_questions:
-        print(f"\n⚠️  QUESTIONS WITHOUT ANSWERS ({len(unknown_questions)}):")
-        print("  These need manual answers before running in 'apply' mode:\n")
-        for i, q in enumerate(sorted(unknown_questions), 1):
-            print(f"  {i}. {q}")
-        print(f"\n  → Add answers to data/application_answers.json")
-        print(f"  → Then run: python main.py apply")
-    else:
-        print(f"\n✅ All detected questions have answers!")
-        print(f"  → Ready to run: python main.py apply")
+    # Print final summary
+    print_summary()
 
 
 if __name__ == "__main__":

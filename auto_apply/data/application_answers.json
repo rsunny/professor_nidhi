@@ -16,7 +16,7 @@
     "date_of_birth": "23/11/1995",
     "nationality": "Indian",
     "gender": "Female",
-    "ethnicity": "Indian",
+    "ethnicity": "Asian - Indian",
     "disability": "No",
     "sexual_orientation": "Prefer not to say",
     "religion": "Prefer not to say"
@@ -32,8 +32,8 @@
   "employment": {
     "currently_employed": "Yes",
     "current_employer": "Here and Now 365",
-    "current_job_title": "Advertising Account Manager",
-    "current_start_date": "May 2024",
+    "current_title": "Advertising Account Manager",
+    "start_date_current": "May 2024",
     "notice_period": "1 month",
     "available_start_date": "1 July 2026",
     "reason_for_leaving": "Seeking to return to financial services where my trade operations expertise is better utilised"
@@ -49,9 +49,9 @@
     "highest_degree": "MSc Investment and Risk Finance",
     "university": "University of Westminster",
     "grade": "Distinction",
-    "graduation_date": "June 2022",
+    "graduation_year": "2022",
     "second_degree": "Master of Commerce, University of Mumbai",
-    "bachelors_degree": "Bachelor of Commerce, University of Mumbai"
+    "bachelors": "Bachelor of Commerce, University of Mumbai"
   },
   "skills": {
     "total_years_experience": "5",
@@ -61,45 +61,34 @@
     "excel_level": "Advanced",
     "bloomberg": "Yes",
     "refinitiv_eikon": "Yes",
-    "sql": "Basic",
-    "vba": "Yes",
-    "ctm": "Yes",
-    "calypso": "No",
-    "markitwire": "No",
+    "sql_level": "Conceptual",
+    "ctm_experience": "Yes",
     "languages": "English (fluent), Hindi (fluent), Marathi (fluent), German (basic)"
   },
   "additional": {
     "how_did_you_hear": "LinkedIn",
     "criminal_convictions": "No",
-    "background_checks": "Yes",
+    "background_check": "Yes",
     "previously_worked_at_company": "No",
     "competing_offers": "No"
   },
-  "common_answers": {
-    "Do you require visa sponsorship": "Yes",
-    "Are you authorized to work": "Yes, with visa sponsorship",
-    "Do you have the right to work in the UK": "Yes",
-    "Years of experience": "5",
-    "How many years of experience": "5",
-    "Current salary": "65000",
-    "Expected salary": "64000",
-    "Desired salary": "64000",
-    "Notice period": "1 month",
-    "When can you start": "1 July 2026",
-    "Earliest start date": "1 July 2026",
-    "Are you willing to relocate": "No",
-    "Gender": "Female",
-    "Do you have a disability": "No",
-    "Criminal convictions": "No",
-    "Are you willing to undergo background checks": "Yes",
-    "How did you hear about this role": "LinkedIn",
-    "Are you currently employed": "Yes",
-    "What is your highest level of education": "Master's Degree",
-    "Do you have experience with Python": "Yes",
-    "Do you have experience with Excel": "Yes",
-    "Do you have experience with Bloomberg": "Yes",
-    "Do you have experience with SQL": "Yes",
-    "Proficiency in Excel": "Advanced",
-    "Proficiency in Python": "Intermediate"
+  "question_patterns": {
+    "sponsorship|visa|authorization|right to work": "Yes, I require Skilled Worker visa sponsorship. My current visa expires April 2027.",
+    "years.*experience|experience.*years": "5 years total, including 2.5 years in financial services",
+    "notice period|notice": "1 month",
+    "salary|compensation|expected.*pay": "64000",
+    "relocat": "No, I am already based in London",
+    "start date|available.*start|earliest.*start": "1 July 2026",
+    "currently employed|employment status": "Yes, currently employed",
+    "gender": "Female",
+    "ethnicity|race": "Asian - Indian",
+    "disability|disabled": "No",
+    "criminal|conviction": "No",
+    "background check": "Yes",
+    "python": "Intermediate - built reconciliation and automation tools using pandas and numpy",
+    "excel": "Advanced - VBA, Power Query, Pivot Tables",
+    "bloomberg": "Yes - daily use at Morgan Stanley for trade matching and market data",
+    "sql": "Conceptual knowledge of queries and database structure",
+    "education|degree|qualification": "MSc Investment and Risk Finance (Distinction), University of Westminster, 2022"
   }
 }

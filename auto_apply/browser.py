@@ -1,14 +1,18 @@
-"""Browser management — Playwright setup, session persistence, anti-detection."""
+"""Browser management — Playwright setup with session persistence."""
 
 import asyncio
-from playwright.async_api import async_playwright, Browser, BrowserContext, Page
-from config import LINKEDIN_EMAIL, LINKEDIN_PASSWORD, HEADLESS, STORAGE_STATE_PATH
+from pathlib import Path
+
+from playwright.async_api import Browser, BrowserContext, Page, async_playwright
+
+from config import LINKEDIN_EMAIL, LINKEDIN_PASSWORD, STORAGE_STATE, OUTPUT_DIR
+from humanizer import random_delay
 
 
 async def create_browser_context(playwright) -> tuple[Browser, BrowserContext]:
     """Launch browser with anti-detection settings and load saved session."""
     browser = await playwright.chromium.launch(
-        headless=HEADLESS,
+        headless=False,
         args=[
             "--disable-blink-features=AutomationControlled",
             "--no-sandbox",
@@ -16,113 +20,101 @@ async def create_browser_context(playwright) -> tuple[Browser, BrowserContext]:
         ],
     )
 
-    # Context options for anti-detection
-    context_opts = {
+    # Browser context options
+    context_options = {
         "viewport": {"width": 1366, "height": 768},
         "user_agent": (
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
             "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/126.0.0.0 Safari/537.36"
+            "Chrome/131.0.0.0 Safari/537.36"
         ),
         "locale": "en-GB",
         "timezone_id": "Europe/London",
     }
 
     # Load existing session if available
-    if STORAGE_STATE_PATH.exists():
-        context_opts["storage_state"] = str(STORAGE_STATE_PATH)
-        print("[browser] Loaded saved session from storageState.json")
+    if STORAGE_STATE.exists():
+        context_options["storage_state"] = str(STORAGE_STATE)
+        print("  📂 Loaded saved session")
 
-    context = await browser.new_context(**context_opts)
+    context = await browser.new_context(**context_options)
 
     # Remove webdriver flag
-    await context.add_init_script("""
+    await context.add_init_script(
+        """
         Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-    """)
+        """
+    )
 
     return browser, context
 
 
-async def ensure_logged_in(page: Page) -> bool:
-    """Check if we're logged into LinkedIn. If not, perform login."""
+async def ensure_logged_in(context: BrowserContext) -> Page:
+    """Check if logged into LinkedIn; if not, perform login."""
+    page = await context.new_page()
     await page.goto("https://www.linkedin.com/feed/", wait_until="domcontentloaded")
-    await asyncio.sleep(3)
+    await random_delay(2, 4)
 
-    # Check if we landed on the feed (logged in) or login page
-    if "/login" in page.url or "/authwall" in page.url or "linkedin.com/uas" in page.url:
-        print("[browser] Not logged in — starting login flow...")
-        return await perform_login(page)
+    # Check if we're on the feed (logged in) or redirected to login
+    if "/login" in page.url or "/authwall" in page.url:
+        print("  🔐 Not logged in — performing login...")
+        await perform_login(page)
+    else:
+        print("  ✅ Already logged in")
 
-    # Check for feed elements
-    feed_indicator = await page.query_selector('[data-test-id="feed-sort"], .feed-shared-update-v2, .scaffold-layout')
-    if feed_indicator:
-        print("[browser] Already logged in!")
-        return True
-
-    print("[browser] Unclear state — attempting login...")
-    return await perform_login(page)
+    # Save session state
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    await context.storage_state(path=str(STORAGE_STATE))
+    return page
 
 
-async def perform_login(page: Page) -> bool:
-    """Login to LinkedIn with credentials from .env."""
-    if not LINKEDIN_EMAIL or not LINKEDIN_PASSWORD:
-        print("[browser] ERROR: LINKEDIN_EMAIL or LINKEDIN_PASSWORD not set in .env")
-        print("[browser] Please fill in your credentials and restart.")
-        return False
-
-    await page.goto("https://www.linkedin.com/login", wait_until="domcontentloaded")
-    await asyncio.sleep(2)
+async def perform_login(page: Page):
+    """Log into LinkedIn. Waits for manual 2FA if triggered."""
+    await page.goto(
+        "https://www.linkedin.com/login", wait_until="domcontentloaded"
+    )
+    await random_delay(1, 2)
 
     # Fill email
-    email_field = await page.query_selector('#username')
-    if email_field:
-        await email_field.fill(LINKEDIN_EMAIL)
-        await asyncio.sleep(0.5)
+    email_input = page.locator('input[name="session_key"]')
+    await email_input.fill(LINKEDIN_EMAIL)
+    await random_delay(0.5, 1)
 
     # Fill password
-    password_field = await page.query_selector('#password')
-    if password_field:
-        await password_field.fill(LINKEDIN_PASSWORD)
-        await asyncio.sleep(0.5)
+    password_input = page.locator('input[name="session_password"]')
+    await password_input.fill(LINKEDIN_PASSWORD)
+    await random_delay(0.5, 1)
 
     # Click sign in
-    sign_in_btn = await page.query_selector('[data-litms-control-urn="login-submit"], button[type="submit"]')
-    if sign_in_btn:
-        await sign_in_btn.click()
+    await page.locator('button[type="submit"]').click()
+    await random_delay(2, 4)
 
-    # Wait for navigation — might hit 2FA/captcha
-    print("[browser] Waiting for login to complete (handle 2FA manually if prompted)...")
-    try:
-        # Wait up to 120 seconds for either feed page or checkpoint
-        await page.wait_for_url(
-            lambda url: "/feed" in url or "/mynetwork" in url or "/in/" in url,
-            timeout=120000,
-        )
-        print("[browser] Login successful!")
-        # Save session
-        await save_session(page.context)
-        return True
-    except Exception:
-        # Check if we're on a challenge page
-        if "checkpoint" in page.url or "challenge" in page.url:
-            print("[browser] 2FA/Verification detected — please complete it manually in the browser.")
-            print("[browser] Waiting up to 5 minutes for manual verification...")
-            try:
-                await page.wait_for_url(
-                    lambda url: "/feed" in url or "/mynetwork" in url,
-                    timeout=300000,
+    # Check for 2FA / security challenge
+    if "checkpoint" in page.url or "challenge" in page.url:
+        print("\n  ⚠️  2FA/Security challenge detected!")
+        print("  👉 Please complete the verification manually in the browser.")
+        print("  ⏳ Waiting up to 120 seconds...")
+
+        # Wait for user to complete 2FA
+        try:
+            await page.wait_for_url(
+                "**/feed/**", timeout=120000
+            )
+            print("  ✅ 2FA completed successfully!")
+        except Exception:
+            # Also check if we ended up on any logged-in page
+            if "/feed" in page.url or "/jobs" in page.url:
+                print("  ✅ Login successful!")
+            else:
+                raise RuntimeError(
+                    "Login failed — could not complete 2FA within 120 seconds"
                 )
-                print("[browser] Verification completed! Login successful.")
-                await save_session(page.context)
-                return True
-            except Exception:
-                print("[browser] Timed out waiting for verification.")
-                return False
-        print(f"[browser] Login may have failed. Current URL: {page.url}")
-        return False
-
-
-async def save_session(context: BrowserContext):
-    """Save browser session state for reuse."""
-    await context.storage_state(path=str(STORAGE_STATE_PATH))
-    print(f"[browser] Session saved to {STORAGE_STATE_PATH}")
+    elif "/feed" in page.url:
+        print("  ✅ Login successful (no 2FA required)")
+    else:
+        # Wait a bit more in case of slow redirect
+        await random_delay(3, 5)
+        if "/feed" not in page.url and "/jobs" not in page.url:
+            print(f"  ⚠️  Unexpected page after login: {page.url}")
+            print("  👉 Please navigate to LinkedIn feed manually.")
+            await page.wait_for_url("**/feed/**", timeout=60000)

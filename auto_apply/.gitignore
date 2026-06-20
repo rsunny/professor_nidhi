@@ -1,5 +1,7 @@
+.env
 output/storageState.json
 output/screenshots/
-.env
+output/applications_log.csv
 __pycache__/
 *.pyc
+.venv/

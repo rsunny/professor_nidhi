@@ -3,84 +3,97 @@
 import csv
 from datetime import datetime
 from pathlib import Path
-from config import APPLICATIONS_LOG_PATH
+
+from config import LOG_FILE, OUTPUT_DIR
 
 
-FIELDNAMES = [
-    "timestamp",
-    "job_id",
-    "company",
-    "title",
-    "url",
-    "method",
-    "status",
-    "notes",
-]
-
-
-def init_log():
+def ensure_log_exists():
     """Create the CSV log file with headers if it doesn't exist."""
-    if not APPLICATIONS_LOG_PATH.exists():
-        with open(APPLICATIONS_LOG_PATH, "w", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
-            writer.writeheader()
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    if not LOG_FILE.exists():
+        with open(LOG_FILE, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(
+                [
+                    "timestamp",
+                    "job_id",
+                    "company",
+                    "title",
+                    "url",
+                    "method",
+                    "status",
+                    "notes",
+                ]
+            )
 
 
-def log_application(job: dict, method: str, status: str, notes: str = ""):
-    """Log an application attempt."""
-    init_log()
-    with open(APPLICATIONS_LOG_PATH, "a", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
-        writer.writerow({
-            "timestamp": datetime.now().isoformat(),
-            "job_id": job.get("id", ""),
-            "company": job.get("company", ""),
-            "title": job.get("title", ""),
-            "url": job.get("url", ""),
-            "method": method,
-            "status": status,
-            "notes": notes,
-        })
+def log_application(
+    job_id: int,
+    company: str,
+    title: str,
+    url: str,
+    method: str,
+    status: str,
+    notes: str = "",
+):
+    """Append an application result to the CSV log."""
+    ensure_log_exists()
+    with open(LOG_FILE, "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(
+            [
+                datetime.now().isoformat(),
+                job_id,
+                company,
+                title,
+                url,
+                method,
+                status,
+                notes,
+            ]
+        )
 
 
-def get_applied_job_ids() -> set[int]:
-    """Get set of job IDs that have already been successfully applied to."""
-    if not APPLICATIONS_LOG_PATH.exists():
+def get_applied_urls() -> set[str]:
+    """Get set of URLs already applied to (to skip duplicates on re-run).
+    Only skips jobs confirmed as submitted. 'scanned' = form filled but not
+    submitted in previous test runs, so those should be retried."""
+    if not LOG_FILE.exists():
         return set()
 
     applied = set()
-    with open(APPLICATIONS_LOG_PATH, "r") as f:
+    with open(LOG_FILE, newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            if row.get("status") == "applied":
-                try:
-                    applied.add(int(row["job_id"]))
-                except (ValueError, KeyError):
-                    pass
+            status = row.get("status", "")
+            # Only skip jobs that were actually submitted successfully
+            if status in ("applied", "submitted"):
+                applied.add(row.get("url", ""))
     return applied
 
 
 def print_summary():
-    """Print a summary of all application attempts."""
-    if not APPLICATIONS_LOG_PATH.exists():
-        print("\n[summary] No applications logged yet.")
+    """Print a summary of all applications."""
+    if not LOG_FILE.exists():
+        print("\n📊 No applications logged yet.")
         return
 
-    stats = {"applied": 0, "failed": 0, "skipped": 0, "expired": 0, "scanned": 0}
-    with open(APPLICATIONS_LOG_PATH, "r") as f:
+    stats = {"applied": 0, "failed": 0, "skipped": 0, "expired": 0, "review": 0}
+
+    with open(LOG_FILE, newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            status = row.get("status", "unknown")
+            status = row["status"]
             stats[status] = stats.get(status, 0) + 1
 
     total = sum(stats.values())
     print(f"\n{'='*50}")
-    print(f"APPLICATION SUMMARY")
+    print(f"📊 APPLICATION SUMMARY")
     print(f"{'='*50}")
-    print(f"  Total attempts: {total}")
-    print(f"  ✅ Applied:     {stats.get('applied', 0)}")
-    print(f"  ❌ Failed:      {stats.get('failed', 0)}")
-    print(f"  ⏭️  Skipped:     {stats.get('skipped', 0)}")
-    print(f"  ⏳ Expired:     {stats.get('expired', 0)}")
-    print(f"  🔍 Scanned:     {stats.get('scanned', 0)}")
+    print(f"  Total processed: {total}")
+    print(f"  ✅ Applied:      {stats.get('applied', 0)}")
+    print(f"  ❌ Failed:       {stats.get('failed', 0)}")
+    print(f"  ⏭️  Skipped:      {stats.get('skipped', 0)}")
+    print(f"  ⏰ Expired:      {stats.get('expired', 0)}")
+    print(f"  👁️  Review:       {stats.get('review', 0)}")
     print(f"{'='*50}\n")

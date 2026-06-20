@@ -1,0 +1,186 @@
+[
+  {
+    "job_id": 27,
+    "company": "Qube Research & Technologies",
+    "title": "Operations Associate",
+    "job_url": "https://uk.linkedin.com/jobs/view/operations-associate-at-qube-research-technologies-4423356441",
+    "platform_url": "https://www.qube-rt.com/",
+    "reason": "The QRT careers portal requires authentication/login before accessing the application form. The Apply button redirects to the home page, indicating we need to authenticate through their ATS (Greenhouse) platform which may require a separate account or LinkedIn OAuth login."
+  },
+  {
+    "job_id": 24,
+    "company": "Ares Management",
+    "title": "Analyst, Systematic Credit Investment Operations",
+    "job_url": "https://uk.linkedin.com/jobs/view/analyst-systematic-credit-investment-operations-at-ares-management-4411519201",
+    "platform_url": "https://aresmgmt.wd1.myworkdayjobs.com/en-US/External/login?redirect=%2Fen-US%2FExternal%2Fjob%2FLondon%252C-UK%2FAnalyst--Systematic-Credit-Investment-Operations_R7818-1%2Fapply%2FautofillWithResume",
+    "reason": "The Workday authentication system is not accepting the credentials provided. The account creation may have failed or there may be an issue with the email/password combination. The system shows 'You may have entered the wrong email address or password or your account might be locked.' This appears to be a platform-specific authentication barrier that requires manual intervention or a different login method (such as LinkedIn OAuth if available on the job application page)."
+  },
+  {
+    "job_id": 5,
+    "company": "Goldman Sachs",
+    "title": "Global Banking & Markets - Interest Rate Derivatives Middle Office Associate",
+    "job_url": "https://uk.linkedin.com/jobs/view/global-banking-markets-interest-rate-derivatives-middle-office-associate-london-at-goldman-sachs-4405303823",
+    "platform_url": "https://hdpc.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/LateralHiring/job/152165/apply/email?mode=job&iis=LinkedIn",
+    "reason": "A verification code has been sent to the applicant's email (nidhishettyuk23@gmail.com). I cannot access external email to retrieve this code, so this is a blocking authentication step that requires manual intervention to complete the verification process."
+  },
+  {
+    "job_id": 7,
+    "company": "JPMorgan Chase",
+    "title": "Trade Support Special Purpose Vehicle Analyst",
+    "job_url": "https://uk.linkedin.com/jobs/view/trade-support-special-purpose-vehicle-analyst-at-jpmorganchase-4429208334",
+    "platform_url": "https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/210758933/apply/email",
+    "reason": "The Oracle HCM form is not progressing past the email/terms screen. This appears to be a custom JPMC application portal that may require account creation or additional authentication before proceeding to the main application form. Standard browser actions are not advancing the form."
+  },
+  {
+    "job_id": 33,
+    "company": "Quilter",
+    "title": "Senior Trade Operations Analyst",
+    "job_url": "https://uk.linkedin.com/jobs/view/senior-trade-operations-analyst-at-quilter-4420629308",
+    "platform_url": "https://quilter.wd3.myworkdayjobs.com/en-US/External-Career-Site/job/London/Senior-Trade-Operations-Analyst_R5482/apply/autofillWithResume?source=LinkedIn",
+    "reason": "Workday authentication system is blocking login attempts. The account creation and sign-in process on this Workday portal is encountering repeated authentication failures. This is a platform-specific issue that requires direct portal access or alternative authentication method that cannot be bypassed through normal form filling."
+  },
+  {
+    "job_id": 14,
+    "company": "Bank of America",
+    "title": "Markets Support Analyst",
+    "job_url": "https://uk.linkedin.com/jobs/view/markets-support-analyst-at-bank-of-america-4430488646",
+    "platform_url": "https://ghr.wd1.myworkdayjobs.com/en-US/lateral-emea/login?redirect=%2Fen-US%2Flateral-emea%2Fjob%2FLondon%2FMarkets-Support-Analyst_26017123%2Fapply%2FapplyManually",
+    "reason": "Workday login failed with credentials provided. The account may not have been created successfully, or there may be a delay in account provisioning. Unable to proceed with manual application without successful authentication."
+  },
+  {
+    "job_id": 6,
+    "company": "JPMorgan Chase",
+    "title": "Trade Support Analyst",
+    "job_url": "https://uk.linkedin.com/jobs/view/trade-support-analyst-at-jpmorganchase-4428316353",
+    "platform_url": "https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/210754519/apply/email#main",
+    "reason": "The JPMC application form appears to be stuck on the email authentication screen. The checkbox for terms and conditions is not responding to clicks, and the NEXT button is not progressing. This may require a direct login with JPMC credentials or account creation that is not accessible through the current interface. The form requires explicit checkbox verification before proceeding, which is currently blocked."
+  },
+  {
+    "job_id": 1,
+    "company": "Goldman Sachs",
+    "title": "Global Banking & Markets - Liquidity Trade Operations, Analyst",
+    "job_url": "https://uk.linkedin.com/jobs/view/global-banking-markets-liquidity-trade-operations-analyst-london-at-goldman-sachs-4418789133",
+    "platform_url": "https://hdpc.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/LateralHiring/job/152166/apply/email?mode=job&iis=LinkedIn",
+    "reason": "A verification code has been sent to the email address nidhishettyuk23@gmail.com. I cannot provide the OTP/verification code as it requires access to the email account. This is a required authentication step that cannot be bypassed without the actual code."
+  },
+  {
+    "job_id": 37,
+    "company": "Bloomberg",
+    "title": "BVAL Fixed Income Evaluator",
+    "job_url": "https://uk.linkedin.com/jobs/view/bval-bloomberg-s-evaluated-pricing-service-fixed-income-evaluator-at-bloomberg-4405134503",
+    "platform_url": "https://bloomberg.avature.net/careers/Login?jobId=18822&source=linkedIn#",
+    "reason": "Bloomberg Avature login failed with error 'The username or password may be incorrect, or access might be restricted.' The provided credentials do not work on this Bloomberg career portal. This is a proprietary Bloomberg applicant tracking system (Avature) that requires a valid Bloomberg career account, which the applicant may not have set up yet. Need to either create a new profile or use alternative login method."
+  },
+  {
+    "job_id": 22,
+    "company": "Wellington Management",
+    "title": "Derivatives Operations Analyst",
+    "job_url": "https://uk.linkedin.com/jobs/view/derivatives-operations-analyst-at-wellington-management-4414921600",
+    "platform_url": "https://wellington.wd5.myworkdayjobs.com/en-GB/External/job/London%2C-United-Kingdom/Derivatives-Operations-Analyst_R94157-1/apply/autofillWithResume?source=LinkedIn",
+    "reason": "Wellington Management Workday portal requires account creation/login. The account creation appears to have failed or credentials are not syncing properly. This is a platform-specific authentication barrier that cannot be bypassed without valid Workday credentials or a working LinkedIn OAuth integration."
+  },
+  {
+    "job_id": 9,
+    "company": "Citi",
+    "title": "Securities & Derivatives Analyst (Intermediate Level)",
+    "job_url": "https://uk.linkedin.com/jobs/view/securities-derivatives-analyst-intermediate-level-at-citi-4426023874",
+    "platform_url": "https://jobs.citi.com/job/-/-/287/92916060432?source=APPLICANT_SOURCE-3-354&utm_medium=job_posting&utm_campaign=emea_experienced&utm_content=social_media&utm_term=393708536&ss=paid&utm_source=linkedin",
+    "reason": "The Apply button opens in a new window but the page has not redirected. This appears to be a Citi careers portal that may require authentication or a separate login. Need to detect if a new tab/window has opened with a login form."
+  },
+  {
+    "job_id": 16,
+    "company": "ICBC Standard Bank",
+    "title": "FIC Securities Settlements Senior Analyst",
+    "job_url": "https://uk.linkedin.com/jobs/view/fic-securities-settlements-senior-analyst-at-icbc-standard-bank-plc-4425797673",
+    "platform_url": "https://icbcs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/user-4008/spa-1/candidate/register",
+    "reason": "CAPTCHA validation failed during account registration. The registration form requires manual CAPTCHA completion which cannot be automated. Please complete the CAPTCHA manually or try the Login option if an account already exists."
+  },
+  {
+    "job_id": 10,
+    "company": "Citi",
+    "title": "Delta One Equity Swaps Trade Support (AVP)",
+    "job_url": "https://uk.linkedin.com/jobs/view/delta-one-equity-swaps-trade-support-assistant-vice-president-at-citi-4406224877",
+    "platform_url": "https://citi.wd5.myworkdayjobs.com/en-US/2/job/London--United-Kingdom/Delta-One-Equity-Swaps-Trade-Support--Assistant-Vice-President-_26954241/apply/applyManually?utm_campaign=emea_experienced&utm_medium=job_posting&utm_content=social_media&utm_source=linkedin&utm_term=393708536&source=APPLICANT_SOURCE-3-354&ss=paid",
+    "reason": "Workday authentication is failing with the newly created account. The system shows 'You may have entered the wrong email address or password or your account might be locked.' This appears to be a Workday platform-specific authentication issue that cannot be resolved without direct access to the Workday system or account verification steps (such as email confirmation) that are not accessible to the automation agent."
+  },
+  {
+    "job_id": 13,
+    "company": "Bank of America",
+    "title": "Equity Trade Control Analyst",
+    "job_url": "https://uk.linkedin.com/jobs/view/equity-trade-control-analyst-at-bank-of-america-4429567065",
+    "platform_url": "https://ghr.wd1.myworkdayjobs.com/en-US/lateral-emea/login?redirect=%2Fen-US%2Flateral-emea%2Fjob%2FLondon%2FEquity-Trade-Control-Analyst_26015639-2%2Fapply%2FapplyManually",
+    "reason": "Workday login system is not accepting the newly created credentials. The account creation may have failed or there is a delay in account activation. This is a Workday platform-specific authentication issue that requires manual intervention or account verification that cannot be automated."
+  },
+  {
+    "job_id": 28,
+    "company": "Balyasny Asset Management",
+    "title": "Associate, Middle Office - EMEA Equity",
+    "job_url": "https://uk.linkedin.com/jobs/view/associate-middle-office-%E2%80%93-emea-equity-at-balyasny-asset-management-l-p-4423997886",
+    "platform_url": "https://bambusdev.my.site.com/s/details?jobReq=Associate--Middle-Office---EMEA-Equity_REQ8280",
+    "reason": "The page appears to be a Salesforce Careers portal (bambusdev.my.site.com) that requires authentication. No Apply button or interactive elements are visible beyond the Skip link. Need to sign in or register with the platform to access the application form."
+  },
+  {
+    "job_id": 50,
+    "company": "Michael Page Finance",
+    "title": "FX, Commodities & DCM Analyst - Global Plc",
+    "job_url": "https://www.reed.co.uk/jobs/fx-commodities-dcm-analyst-global-plc/56951748",
+    "platform_url": "https://secure.reed.co.uk/login?state=hKFo2SBzVm92S1RlSjg4WVdndXBZTHNRNXRSZW8wNUktaHROOaFupWxvZ2luo3RpZNkgeUhZQUZ3R1JxcHZmcF9VYlc5dWk5bEVQel95MjhjSFSjY2lk2SBOM3JYZExiWE1LemdrcW81WnhwYVZiSXFDSVRtb255MQ&client=N3rXdLbXMKzgkqo5ZxpaVbIqCITmony1&protocol=oauth2&audience=https%3A%2F%2Fwww.reed.co.uk%2F&scope=openid%20profile%20email%20offline_access&redirect_uri=https%3A%2F%2Fwww.reed.co.uk%2Fauthentication%2Fsdk%2Fcallback&response_type=code&code_challenge=Chh_OCJvJV2qnxT8lNuoia4Xea3vLtVh8SZ9BSN2JRo&code_challenge_method=S256&nonce=jy5RBkTDUlcKamfdpTZctc7Ww5FJ7KHg51_p_Mz6hjY",
+    "reason": "Reed.co.uk login credentials appear to be incorrect. The system returned 'Your email or password is incorrect. Please try again.' Error. Cannot proceed with application without valid authentication credentials for this platform."
+  },
+  {
+    "job_id": 49,
+    "company": "Robert Walters",
+    "title": "Fixed Income New Issue Associate",
+    "job_url": "https://www.reed.co.uk/jobs/fixed-income-new-issue-associate/57027270",
+    "platform_url": "https://secure.reed.co.uk/login?state=hKFo2SA4endHMHNXeGs5YTJ5dlM3dDJ4VHk4X1d3QzB3cHZXVaFupWxvZ2luo3RpZNkgVVREelQwNm1GUkdRZkFKNHp0VUMxX05KLVlLSVNUNl-jY2lk2SBOM3JYZExiWE1LemdrcW81WnhwYVZiSXFDSVRtb255MQ&client=N3rXdLbXMKzgkqo5ZxpaVbIqCITmony1&protocol=oauth2&audience=https%3A%2F%2Fwww.reed.co.uk%2F&scope=openid%20profile%20email%20offline_access&redirect_uri=https%3A%2F%2Fwww.reed.co.uk%2Fauthentication%2Fsdk%2Fcallback&response_type=code&code_challenge=iGvh9-olQdGV8lbv6f9u3CqVsGrDn2Wg9LmMhLrlyFk&code_challenge_method=S256&nonce=5tJAZXvHv9uF9FadST3Zcg2SVFe1D8ykz1v_VILXf6E",
+    "reason": "Reed.co.uk login failed with incorrect email/password error. The provided LinkedIn credentials (nidhishettyuk23@gmail.com / Bunny2829$) are not valid for the Reed.co.uk platform. Unable to proceed with application without successful authentication."
+  },
+  {
+    "job_id": 46,
+    "company": "Michael Page Banking",
+    "title": "Middle Office Senior Analyst",
+    "job_url": "https://www.reed.co.uk/jobs/middle-office-senior-analyst/57027105",
+    "platform_url": "https://secure.reed.co.uk/login?state=hKFo2SBjV0ljanpxVWY1a05RQmRwQ2pqenFVZUhsbnd4UjkyNaFupWxvZ2luo3RpZNkgeGMwTlZEOWVFSTJwZUhXMVBXWWotbkhicnoyTWFqZ0OjY2lk2SBOM3JYZExiWE1LemdrcW81WnhwYVZiSXFDSVRtb255MQ&client=N3rXdLbXMKzgkqo5ZxpaVbIqCITmony1&protocol=oauth2&audience=https%3A%2F%2Fwww.reed.co.uk%2F&scope=openid%20profile%20email%20offline_access&redirect_uri=https%3A%2F%2Fwww.reed.co.uk%2Fauthentication%2Fsdk%2Fcallback&response_type=code&code_challenge=fPGEo6A57UOJMslF_8gQCfUP_oLG9AUeHL5S_XLqjMY&code_challenge_method=S256&nonce=9QU9axdHFha0vdJnRZPndR7Hdi6mLA1-0ztDmMtOrIw",
+    "reason": "Reed.co.uk login failed with credentials provided - email or password incorrect. Unable to proceed with authentication. This may indicate the credentials are invalid or the account doesn't exist on this platform."
+  },
+  {
+    "job_id": 47,
+    "company": "Robert Walters",
+    "title": "Post-trade Support - Transaction Reporting (MiFID/SQL)",
+    "job_url": "https://www.reed.co.uk/jobs/post-trade-support-transaction-reporting-mifid-sql-qlik/57033752",
+    "platform_url": "https://secure.reed.co.uk/login?state=hKFo2SBXSUdlMVNFLXNOMmNuczVqQzRHMENfMXU5WldiblBXVqFupWxvZ2luo3RpZNkgcFVOVjJObFRHVDhKQzhPYTdUMWlsNDJpRW4zUlppSEujY2lk2SBOM3JYZExiWE1LemdrcW81WnhwYVZiSXFDSVRtb255MQ&client=N3rXdLbXMKzgkqo5ZxpaVbIqCITmony1&protocol=oauth2&audience=https%3A%2F%2Fwww.reed.co.uk%2F&scope=openid%20profile%20email%20offline_access&redirect_uri=https%3A%2F%2Fwww.reed.co.uk%2Fauthentication%2Fsdk%2Fcallback&response_type=code&code_challenge=GEx2c1OhxYx2Mwsxhw_KRjnTI4Jio4nh1YJTstYdL04&code_challenge_method=S256&nonce=pCvZZxFwtdOJaU69HwkpVCwo1-hKHB34HCx6vZY6608",
+    "reason": "Reed.co.uk login failed with provided credentials (email or password incorrect). Cannot proceed with application without successful authentication. The LinkedIn credentials provided are for LinkedIn.com, not for Reed.co.uk account."
+  },
+  {
+    "job_id": 44,
+    "company": "Robert Walters",
+    "title": "Front Office Trading Support Analyst - Equities/Futures",
+    "job_url": "https://www.reed.co.uk/jobs/front-office-trading-support-analyst-equities-futures/57022430",
+    "platform_url": "https://secure.reed.co.uk/login?state=hKFo2SBHQmtITTVQRmV0OVRqVy1PaDNEUnRXQ2twYmZqeFN4SaFupWxvZ2luo3RpZNkgUC1vMVUxcjBMYU1FZ25vNkpZTUZFbllMMmdiQ0p2dUGjY2lk2SBOM3JYZExiWE1LemdrcW81WnhwYVZiSXFDSVRtb255MQ&client=N3rXdLbXMKzgkqo5ZxpaVbIqCITmony1&protocol=oauth2&audience=https%3A%2F%2Fwww.reed.co.uk%2F&scope=openid%20profile%20email%20offline_access&redirect_uri=https%3A%2F%2Fwww.reed.co.uk%2Fauthentication%2Fsdk%2Fcallback&response_type=code&code_challenge=J84rnhlmzb_JNMCUphfZo4TDJqbIu9erUWsrYoBM_18&code_challenge_method=S256&nonce=AH3srCRh6PO_uGLoVK9J6A63FsSjbGuXgYQieEq87Ag",
+    "reason": "Authentication failed - email or password incorrect for Reed.co.uk account. Unable to proceed with login using provided credentials."
+  },
+  {
+    "job_id": 11,
+    "company": "Citi",
+    "title": "Equity Derivatives - Corporate Action Adjustments (AVP)",
+    "job_url": "https://uk.linkedin.com/jobs/view/equity-derivatives-corporate-action-adjustments-data-integrity-assistant-vice-president-at-citi-4422012725",
+    "platform_url": "https://citi.wd5.myworkdayjobs.com/2/job/London--United-Kingdom/Equity-Derivatives---Corporate-Action-Adjustments---Data-Integrity--Assistant-Vice-President-_26966948/apply?utm_campaign=emea_experienced&utm_medium=job_posting&utm_content=social_media&utm_source=linkedin&utm_term=393708536&source=APPLICANT_SOURCE-3-354&ss=paid",
+    "reason": "Workday login page detected. This is a platform-specific login that requires Citi account credentials, not LinkedIn. Since no 'Apply with LinkedIn' button is available and I don't have Citi Workday credentials, I cannot proceed with authentication."
+  },
+  {
+    "job_id": 34,
+    "company": "Old Mission",
+    "title": "Operations Analyst",
+    "job_url": "https://uk.linkedin.com/jobs/view/operations-analyst-at-old-mission-4342043377",
+    "platform_url": "https://www.oldmissioncapital.com/careers/?gh_jid=7546323003",
+    "reason": "The Greenhouse careers page is not loading the job application form. The page shows 'CAREER OPPORTUNITIES' but the actual job posting and application form are not rendering. This appears to be a Greenhouse ATS (Applicant Tracking System) that requires either direct platform login or alternative access method. Unable to proceed without seeing the application form interface."
+  },
+  {
+    "job_id": 48,
+    "company": "IPOE Consulting",
+    "title": "Trade Support Analyst",
+    "job_url": "https://www.reed.co.uk/jobs/trade-support-analyst/57022939",
+    "platform_url": "https://secure.reed.co.uk/login?state=hKFo2SBwRUZGSzNDaGZsb3NReTIxMlhjY1VsYUpXaENMS1E0WqFupWxvZ2luo3RpZNkgeG1PVHAxSUFtX3dLc04yQjhaMmV1ZngtMGpBUTJrUGejY2lk2SBOM3JYZExiWE1LemdrcW81WnhwYVZiSXFDSVRtb255MQ&client=N3rXdLbXMKzgkqo5ZxpaVbIqCITmony1&protocol=oauth2&audience=https%3A%2F%2Fwww.reed.co.uk%2F&scope=openid%20profile%20email%20offline_access&redirect_uri=https%3A%2F%2Fwww.reed.co.uk%2Fauthentication%2Fsdk%2Fcallback&response_type=code&code_challenge=x0nNZN91wHhJXnipcxBMaOrgpM6-AYJSXt-9db8Lbxo&code_challenge_method=S256&nonce=xXcrSbChtBsvFobwu0h4A94FoUgFhZ-LxLn1jES2vKk",
+    "reason": "Reed.co.uk login failed with error 'Your email or password is incorrect'. The credentials provided may be incorrect or the account may not exist on this platform. Cannot proceed with application without successful authentication."
+  }
+]

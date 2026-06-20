@@ -1,0 +1,16 @@
+{
+  "#15 - TD Securities - TDS Operations Analyst II - FTC 18 Month": [
+    {
+      "label": "Account verification email sent - requires checking email inbox for verification link. Cannot proceed without email verification access.",
+      "type": "unknown",
+      "has_answer": false
+    }
+  ],
+  "#30 - Capstone Investment Advisors - Operations": [
+    {
+      "label": "question_36539574002 - label text not visible in accessibility tree",
+      "type": "unknown",
+      "has_answer": false
+    }
+  ]
+}

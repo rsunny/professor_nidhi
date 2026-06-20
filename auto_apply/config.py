@@ -1,123 +1,110 @@
-"""Configuration loader — parses .env, application data, and job list."""
-
-from __future__ import annotations
+"""Configuration loader — reads .env, application data, and job list."""
 
 import json
 import os
 import re
 from pathlib import Path
-from typing import List, Dict
+
 from dotenv import load_dotenv
 
-load_dotenv()
-
-# Paths
 BASE_DIR = Path(__file__).parent
-DATA_DIR = BASE_DIR / "data"
-OUTPUT_DIR = BASE_DIR / "output"
-SCREENSHOTS_DIR = OUTPUT_DIR / "screenshots"
-
-# Ensure directories exist
-DATA_DIR.mkdir(exist_ok=True)
-OUTPUT_DIR.mkdir(exist_ok=True)
-SCREENSHOTS_DIR.mkdir(exist_ok=True)
+load_dotenv(BASE_DIR / ".env")
 
 # LinkedIn credentials
 LINKEDIN_EMAIL = os.getenv("LINKEDIN_EMAIL", "")
 LINKEDIN_PASSWORD = os.getenv("LINKEDIN_PASSWORD", "")
 
-
-def _resolve_path(env_var: str, default: str = "") -> str:
-    """Resolve a path from .env, treating relative paths as relative to BASE_DIR."""
-    raw = os.getenv(env_var, default)
-    if not raw:
-        return ""
-    p = Path(raw)
-    if not p.is_absolute():
-        p = (BASE_DIR / p).resolve()
-    return str(p)
-
-
-# File paths (resolved relative to project root)
-RESUME_PATH = _resolve_path("RESUME_PATH")
-COVER_LETTER_GENERIC_PATH = _resolve_path("COVER_LETTER_GENERIC_PATH")
-COVER_LETTERS_MD_PATH = _resolve_path("COVER_LETTERS_MD_PATH")
-JOBS_MD_PATH = _resolve_path("JOBS_MD_PATH")
+# File paths
+RESUME_PATH = Path(os.getenv("RESUME_PATH", ""))
+COVER_LETTER_DIR = Path(os.getenv("COVER_LETTER_DIR", ""))
+GENERIC_COVER_LETTER = Path(os.getenv("GENERIC_COVER_LETTER", ""))
 
 # Rate limiting
 MAX_APPS_PER_HOUR = int(os.getenv("MAX_APPS_PER_HOUR", "5"))
 MIN_DELAY_SECONDS = int(os.getenv("MIN_DELAY_SECONDS", "30"))
 MAX_DELAY_SECONDS = int(os.getenv("MAX_DELAY_SECONDS", "120"))
 
-# Browser
-HEADLESS = os.getenv("HEADLESS", "false").lower() == "true"
-
 # Mode
-MODE = os.getenv("MODE", "apply")  # "apply" or "scan"
+MODE = os.getenv("MODE", "review")  # "auto" or "review"
 
-# Storage state path
-STORAGE_STATE_PATH = OUTPUT_DIR / "storageState.json"
-APPLICATIONS_LOG_PATH = OUTPUT_DIR / "applications_log.csv"
-SCANNED_QUESTIONS_PATH = OUTPUT_DIR / "scanned_questions.json"
+# Output paths
+OUTPUT_DIR = BASE_DIR / "output"
+SCREENSHOTS_DIR = OUTPUT_DIR / "screenshots"
+STORAGE_STATE = OUTPUT_DIR / "storageState.json"
+LOG_FILE = OUTPUT_DIR / "applications_log.csv"
+
+# Data paths
+DATA_DIR = BASE_DIR / "data"
+JOBS_JSON = DATA_DIR / "jobs.json"
+ANSWERS_JSON = DATA_DIR / "application_answers.json"
 
 
-def parse_jobs_from_md(md_path: str = None) -> List[Dict]:
-    """Parse jobs_50.md into a list of job dicts."""
-    path = md_path or JOBS_MD_PATH
-    with open(path, "r") as f:
+def load_jobs() -> list[dict]:
+    """Load jobs from data/jobs.json."""
+    with open(JOBS_JSON) as f:
+        return json.load(f)
+
+
+def load_answers() -> dict:
+    """Load application answers from data/application_answers.json."""
+    with open(ANSWERS_JSON) as f:
+        return json.load(f)
+
+
+def parse_jobs_from_markdown(md_path: str) -> list[dict]:
+    """Parse jobs_50.md into structured job list. Used once to generate jobs.json."""
+    jobs = []
+    current_group = ""
+
+    with open(md_path) as f:
         content = f.read()
 
-    jobs = []
-    # Match table rows with job data: | # | Title | Company | Salary | Priority | URL |
-    pattern = r"\|\s*(\d+)\s*\|\s*(.+?)\s*\|\s*(.+?)\s*\|\s*(.+?)\s*\|\s*(.+?)\s*\|\s*(https?://\S+)\s*\|"
-    for match in re.finditer(pattern, content):
-        job_id = int(match.group(1))
-        title = match.group(2).strip()
-        company = match.group(3).strip()
-        salary = match.group(4).strip()
-        priority = match.group(5).strip()
-        url = match.group(6).strip()
+    # Find group headings
+    group_pattern = re.compile(r"^## (Group \w+:.*)", re.MULTILINE)
+    # Find table rows with job data
+    row_pattern = re.compile(
+        r"\|\s*(\d+)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(https?://\S+)\s*\|"
+    )
 
-        # Determine group based on job_id
-        if job_id <= 17:
-            group = "A"
-        elif job_id <= 32:
-            group = "B"
-        elif job_id <= 43:
-            group = "C"
-        else:
-            group = "D"
+    lines = content.split("\n")
+    for line in lines:
+        group_match = group_pattern.match(line)
+        if group_match:
+            current_group = group_match.group(1).strip()
+            continue
 
-        # Determine salary level
-        if job_id in [7, 19, 21]:
-            salary_level = "senior"  # £90,000
-        else:
-            salary_level = "analyst"  # £64,000
+        row_match = row_pattern.match(line)
+        if row_match:
+            job_id = int(row_match.group(1))
+            title = row_match.group(2).strip()
+            company = row_match.group(3).strip()
+            salary = row_match.group(4).strip()
+            priority = row_match.group(5).strip()
+            url = row_match.group(6).strip()
 
-        jobs.append({
-            "id": job_id,
-            "title": title,
-            "company": company,
-            "salary": salary,
-            "priority": priority,
-            "url": url,
-            "group": group,
-            "salary_level": salary_level,
-        })
+            jobs.append(
+                {
+                    "id": job_id,
+                    "title": title,
+                    "company": company,
+                    "salary": salary,
+                    "priority": priority,
+                    "url": url,
+                    "group": current_group,
+                }
+            )
 
     return jobs
 
 
-def get_application_answers() -> dict:
-    """Return pre-built application answers dict."""
-    answers_path = DATA_DIR / "application_answers.json"
-    if answers_path.exists():
-        with open(answers_path) as f:
-            return json.load(f)
-    return {}
-
-
-def save_jobs_json(jobs: List[Dict]):
-    """Save parsed jobs to JSON for reference."""
-    with open(DATA_DIR / "jobs.json", "w") as f:
-        json.dump(jobs, f, indent=2)
+if __name__ == "__main__":
+    # Generate jobs.json from jobs_50.md
+    jobs_md = COVER_LETTER_DIR / "jobs_50.md"
+    if jobs_md.exists():
+        jobs = parse_jobs_from_markdown(str(jobs_md))
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        with open(JOBS_JSON, "w") as f:
+            json.dump(jobs, f, indent=2)
+        print(f"Generated {len(jobs)} jobs -> {JOBS_JSON}")
+    else:
+        print(f"jobs_50.md not found at {jobs_md}")
