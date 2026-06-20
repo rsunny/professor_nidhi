@@ -622,6 +622,17 @@ def score_relevance(job: dict) -> float:
     if "london" in location:
         score += 5
 
+    # Salary filter — penalize jobs clearly below £60k
+    salary_text = job.get("salary", "").lower().replace(",", "").replace("£", "")
+    if salary_text and salary_text != "competitive":
+        numbers = re.findall(r"(\d{5,6})", salary_text)
+        if numbers:
+            max_salary = max(int(n) for n in numbers)
+            if max_salary < 60000:
+                score -= 20  # Too low
+            elif max_salary >= 65000:
+                score += 5  # Meets preferred range
+
     return max(0, min(100, score))
 
 
