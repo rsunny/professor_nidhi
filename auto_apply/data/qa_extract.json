@@ -1,0 +1,1664 @@
+[
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4424885101/",
+    "job_title": "Client Operations Analyst - Investment Operations",
+    "company": "InvestEngine",
+    "status": "applied",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4424755802/",
+    "job_title": "Operations Analyst",
+    "company": "Mercer",
+    "status": "applied",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4421166329/",
+    "job_title": "Finance Process Analyst",
+    "company": "Talentedge",
+    "status": "applied",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4421172703/",
+    "job_title": "Junior Treasury Risk Analyst",
+    "company": "Cameron Kennedy",
+    "status": "applied",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4421172703-20917602273-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 4,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4421172703-20917602321-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 6,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4421172703-20917602305-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 8,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4421172703-20917602329-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 10,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4421172703-20917602337-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4420629308/",
+    "job_title": "Senior Trade Operations Analyst",
+    "company": "Quilter",
+    "status": "applied",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4423616328/",
+    "job_title": "Commercial Finance Analyst",
+    "company": "Marks Sattin",
+    "status": "applied",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426060388/",
+    "job_title": "Corporate Treasury - Trade Processing - Analyst - London",
+    "company": "Goldman Sachs",
+    "status": "applied",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426857185-21036081001-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426850333/",
+    "job_title": "Physical Commodities Operations Analyst",
+    "company": "Macquarie Group",
+    "status": "applied",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4430423455-33297757130-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4431167764/",
+    "job_title": "Prime Financial Services - Client Service Analyst",
+    "company": "JPMorganChase",
+    "status": "no_easy_apply",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4424068494/",
+    "job_title": "R26014384 Treasury Finance & Banking Analyst",
+    "company": "UPS",
+    "status": "max_steps",
+    "questions_and_answers": [
+      {
+        "action": "FILL",
+        "index": 12,
+        "label": "single-typeahead-entity-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303112554-location-GEO-LOCATION",
+        "value": "London"
+      },
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      },
+      {
+        "action": "FILL",
+        "index": 6,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113314-text",
+        "value": "1 month"
+      },
+      {
+        "action": "FILL",
+        "index": 8,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113386-numeric",
+        "value": "60000"
+      },
+      {
+        "action": "FILL",
+        "index": 10,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113370-numeric",
+        "value": "60000"
+      },
+      {
+        "action": "FILL",
+        "index": 12,
+        "label": "Please could you share any other information around your salary or benefits in your current package such as Bonus, Car Allowance and Pension?",
+        "value": "N/A"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "1 month"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "1 Month"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "LinkedIn"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "4 weeks"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "0-4 weeks"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "1-4 weeks"
+      },
+      {
+        "action": "FILL",
+        "index": 26,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113410-text",
+        "value": "LinkedIn"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "Job Board"
+      },
+      {
+        "action": "SELECT",
+        "index": 24,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113426-multipleChoice",
+        "value": "Skilled Worker Visa"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "Skilled Worker"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "Visa"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "1"
+      },
+      {
+        "action": "FILL",
+        "index": 12,
+        "label": "Please could you share any other information around your salary or benefits in your current package such as Bonus, Car Allowance and Pension?",
+        "value": "Base salary of \u00a360,000 per annum. No additional bonus, car allowance or pension benefits in current package."
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "Immediately"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "Work Visa"
+      },
+      {
+        "action": "SELECT",
+        "index": 18,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429340220-33303113362-multipleChoice",
+        "value": "Online Job Board"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426100396/",
+    "job_title": "Junior Operations Analyst",
+    "company": "BGC Group",
+    "status": "applied",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4415283608/",
+    "job_title": "Pre-Trade Monitoring Analyst",
+    "company": "Legal & General",
+    "status": "applied",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4425818325/",
+    "job_title": "FP&A Analyst",
+    "company": "Cedar",
+    "status": "applied",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4429901916/",
+    "job_title": "Client Analyst, Officer",
+    "company": "State Street",
+    "status": "applied",
+    "questions_and_answers": [
+      {
+        "action": "FILL",
+        "index": 12,
+        "label": "single-typeahead-entity-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4428861589-33229767570-location-GEO-LOCATION",
+        "value": "London"
+      },
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      },
+      {
+        "action": "FILL",
+        "index": 10,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4428861589-33229768386-text",
+        "value": "60000"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4424067703/",
+    "job_title": "Investment Analyst | Remote",
+    "company": "Crossing Hurdles",
+    "status": "pass2_modal_failed",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4427684972/",
+    "job_title": "Custody Operations Transformation Analyst",
+    "company": "JPMorganChase",
+    "status": "pass2_modal_failed",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4410611961/",
+    "job_title": "Commercial Finance Analyst - Retail",
+    "company": "Agora Talent",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4427506207/",
+    "job_title": "Product Control Analyst",
+    "company": "Insight Commodities",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4427506207-33094325290-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 4,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4427506207-33094325282-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 6,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4427506207-33094325322-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 8,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4427506207-33094325330-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 10,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4427506207-33094325338-multipleChoice",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4427218667/",
+    "job_title": "Junior Trade Support Analyst",
+    "company": "Cantor Fitzgerald",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426956835/",
+    "job_title": "Finance Pricing Analyst",
+    "company": "UPS",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4418789133/",
+    "job_title": "Global Banking & Markets - Liquidity Trade Operations, Analyst - London",
+    "company": "Goldman Sachs",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426857185-21036081001-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4421706406/",
+    "job_title": "Financial Analyst | $40/hr Remote",
+    "company": "Crossing Hurdles",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4420192612/",
+    "job_title": "Hedge Fund Operations Analyst",
+    "company": "Maldon Partners",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4420192612-20901910977-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 4,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4420192612-20901910985-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426952934/",
+    "job_title": "Finance Pricing Analyst",
+    "company": "UPS",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4411519201/",
+    "job_title": "Analyst, Systematic Credit Investment Operations",
+    "company": "Ares Management",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4429221174/",
+    "job_title": "Trading Services Analyst",
+    "company": "JPMorganChase",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4422414194/",
+    "job_title": "Metals Trade Support Analyst",
+    "company": "Richard James Recruitment Specialists Ltd",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "UPLOAD",
+        "index": 10,
+        "label": "Upload resume",
+        "value": "/Users/prasanthsunny/Downloads/nidhi/Nidhi_Shetty_Resume.pdf"
+      },
+      {
+        "action": "SELECT",
+        "index": 10,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4422414194-32767462034-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 12,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4422414194-32767462178-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4425350590/",
+    "job_title": "Trade Support Analyst - Global Prop Trading Firm - Up to \u00a3100k TC + WFH",
+    "company": "Mondrian Alpha",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4430486147/",
+    "job_title": "Operations Analyst",
+    "company": "Selby Jennings",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Middle name",
+        "field_type": "text",
+        "options": null,
+        "answer": "Nidhi Shetty",
+        "confidence": "high",
+        "source": "profile_field"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Location (city)",
+        "field_type": "text",
+        "options": null,
+        "answer": "London",
+        "confidence": "high",
+        "source": "profile_field"
+      },
+      {
+        "action": "FILL",
+        "index": 14,
+        "label": "single-typeahead-entity-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4430486147-33301403074-location-GEO-LOCATION",
+        "value": "London"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4419440496/",
+    "job_title": "Trade Support Analyst",
+    "company": "SS&C Eze",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Do you have the right to work in the UK?",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "What are your salary expectations ?",
+        "field_type": "text",
+        "options": null,
+        "answer": "64000",
+        "confidence": "high",
+        "source": "question_patterns: salary|compensation|expected.*pay"
+      },
+      {
+        "action": "FILL",
+        "index": 14,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4419440496-32533938674-numeric",
+        "value": "64000"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4420281868/",
+    "job_title": "Commercial Analyst/ Finance Operations Analyst/ Accounts Payable Analyst",
+    "company": "Harvey Nash",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "How many years of experience do you have?",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Do you have the right to work in the UK?",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Are you willing to undergo a background check?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: background check"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Proficient with MS Excel ?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Advanced - VBA, Power Query, Pivot Tables",
+        "confidence": "high",
+        "source": "question_patterns: excel"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Years' of experience in Accounts Payable (AP) ?",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "SELECT",
+        "index": 8,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4420281868-32606176602-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 10,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4420281868-32606176586-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "FILL",
+        "index": 12,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4420281868-32606176610-numeric",
+        "value": "5"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4429795247/",
+    "job_title": "Middle Office Analyst",
+    "company": "Equifind",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Are you legally authorized to work in this country?",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: right_to_work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "What is the basis of your eligibility? (Citizen/visa details)",
+        "field_type": "textarea",
+        "options": null,
+        "answer": "Yes, I require Skilled Worker visa sponsorship. My current visa expires April 2027.",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "What is your salary expectations?",
+        "field_type": "textarea",
+        "options": null,
+        "answer": "64000",
+        "confidence": "high",
+        "source": "question_patterns: salary|compensation|expected.*pay"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Start date (mm/dd/yyyy)",
+        "field_type": "text",
+        "options": null,
+        "answer": "1 July 2026",
+        "confidence": "high",
+        "source": "question_patterns: start date|available.*start|earliest.*start"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Why are you interested in this role?",
+        "field_type": "textarea",
+        "options": null,
+        "answer": "UNKNOWN",
+        "confidence": "low",
+        "source": "no_match_found"
+      },
+      {
+        "action": "FILL",
+        "index": 6,
+        "label": "What is the basis of your eligibility? (Citizen/visa details)",
+        "value": "Yes, I require Skilled Worker visa sponsorship. My current visa expires April 2027."
+      },
+      {
+        "action": "FILL",
+        "index": 8,
+        "label": "What is your salary expectations?",
+        "value": "64000"
+      },
+      {
+        "action": "FILL",
+        "index": 10,
+        "label": "mm/dd/yyyy",
+        "value": "07/01/2026"
+      },
+      {
+        "action": "FILL",
+        "index": 12,
+        "label": "Why are you interested in this role?",
+        "value": "I am interested in this Middle Office Analyst role at Equifind because it aligns well with my experience in financial operations and trade support. I am keen to contribute my analytical skills and attention to detail to ensure smooth post-trade processes, risk management, and reporting. This role offers an excellent opportunity to grow within a dynamic financial services firm."
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4429530817/",
+    "job_title": "Trade Validation Analyst",
+    "company": "Impellam Group",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4425838915/",
+    "job_title": "Compliance Analyst - Fund Management",
+    "company": "MERJE",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4425095467/",
+    "job_title": "Stock Loan Middle Office Analyst",
+    "company": "G MASS Consulting",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Location (city)",
+        "field_type": "text",
+        "options": null,
+        "answer": "London",
+        "confidence": "high",
+        "source": "profile_field"
+      },
+      {
+        "action": "FILL",
+        "index": 12,
+        "label": "single-typeahead-entity-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4425095467-32965336818-location-GEO-LOCATION",
+        "value": "London"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Expected Salary / Day Rate",
+        "field_type": "text",
+        "options": null,
+        "answer": "64000",
+        "confidence": "high",
+        "source": "question_patterns: salary|compensation|expected.*pay"
+      },
+      {
+        "action": "FILL",
+        "index": 13,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4425095467-32965336850-text",
+        "value": "64000"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4425097347/",
+    "job_title": "Stock Loan Settlements Analyst",
+    "company": "G MASS Consulting",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Location (city)",
+        "field_type": "text",
+        "options": null,
+        "answer": "London",
+        "confidence": "high",
+        "source": "profile_field"
+      },
+      {
+        "action": "FILL",
+        "index": 12,
+        "label": "single-typeahead-entity-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4425097347-32965941970-location-GEO-LOCATION",
+        "value": "London"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Expected Salary / Day Rate",
+        "field_type": "text",
+        "options": null,
+        "answer": "64000",
+        "confidence": "high",
+        "source": "question_patterns: salary|compensation|expected.*pay"
+      },
+      {
+        "action": "FILL",
+        "index": 13,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4425097347-32965941978-text",
+        "value": "64000"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4427047276/",
+    "job_title": "Compliance Monitoring Analyst \u2013 Wealth Management",
+    "company": "CLARC Recruitment",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4431663491/",
+    "job_title": "Credit Risk Analyst",
+    "company": "Taylor Root",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "How many years of experience do you have in credit risk?",
+        "field_type": "text",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with financial modeling?",
+        "field_type": "text",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "FILL",
+        "index": 2,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4431663491-33320025154-numeric",
+        "value": "5"
+      },
+      {
+        "action": "FILL",
+        "index": 4,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4431663491-33320025162-numeric",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4431726500/",
+    "job_title": "Trade Surveillance Analyst",
+    "company": "Compliance Professionals",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4431719321/",
+    "job_title": "Trading Operations Analyst",
+    "company": "Kite Consulting Group",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Are you legally authorized to work in the United Kingdom?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: right_to_work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Will you now or in the future require sponsorship for employment visa status?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Are you comfortable commuting to this job's location?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: willing_to_commute"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4431719321-33323445730-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 4,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4431719321-33323445698-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 6,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4431719321-33323445706-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4429973135/",
+    "job_title": "Operations Analyst",
+    "company": "Orla Rose Associates",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Are you legally authorized to work in the United Kingdom?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: right_to_work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Do you now or will you in the future require sponsorship for employment visa status?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429973135-33292770386-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 4,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4429973135-33292770378-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426822215/",
+    "job_title": "Credit Analyst \u2013 Commodities",
+    "company": "KennedyPearce Consulting",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Credit Analysis?",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Do you have experience in Commodities?",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "UNKNOWN",
+        "confidence": "low",
+        "source": "no_match_found"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Are you legally authorized to work in the United Kingdom?",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: right_to_work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Commodities?",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Hedging?",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "FILL",
+        "index": 2,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426822215-21032440321-numeric",
+        "value": "5"
+      },
+      {
+        "action": "FILL",
+        "index": 12,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426822215-21032440361-numeric",
+        "value": "5"
+      },
+      {
+        "action": "FILL",
+        "index": 14,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426822215-21032440377-numeric",
+        "value": "5"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426096657/",
+    "job_title": "Financial Analyst",
+    "company": "Hays",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Middle name",
+        "field_type": "text",
+        "options": null,
+        "answer": "Nidhi Shetty",
+        "confidence": "high",
+        "source": "profile_field"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Location (city)",
+        "field_type": "text",
+        "options": null,
+        "answer": "London",
+        "confidence": "high",
+        "source": "profile_field"
+      },
+      {
+        "action": "FILL",
+        "index": 14,
+        "label": "single-typeahead-entity-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426096657-33065108218-location-GEO-LOCATION",
+        "value": "London"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4423897446/",
+    "job_title": "Operations Analyst - Structured Credit",
+    "company": "One Ten Associates",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4429031885/",
+    "job_title": "Financial Analyst",
+    "company": "Robert Half",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4431658653/",
+    "job_title": "Graduate Collateral Management Analyst - Buy-side Trading & Operations Services",
+    "company": "Tempest Vane Partners",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426833211/",
+    "job_title": "Graduate Trading Application Support Analyst",
+    "company": "Quant Capital",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Linux?",
+        "field_type": "text",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Do you have the right to work in the UK?",
+        "field_type": "select",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Linux?",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "FILL",
+        "index": 2,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426833211-21031700497-numeric",
+        "value": "5"
+      },
+      {
+        "action": "SELECT",
+        "index": 4,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426833211-21031700489-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426425059/",
+    "job_title": "Investment Banking Analyst Expert (Remote | $100 \u2013$130/hr)",
+    "company": "Call For Referral",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4428946180/",
+    "job_title": "Commercial Finance Analyst",
+    "company": "Agora Talent",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4424212475/",
+    "job_title": "Compliance Analyst (Wealth Management)",
+    "company": "Rutherford",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Do you have the right to work in the UK?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4424212475-30294207020-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426302378/",
+    "job_title": "Financial Planning Analyst",
+    "company": "Mackie Myers",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4428945925/",
+    "job_title": "Business Analyst - Middle-Office Experience - Financial Services - \u00a3105,000 per annum",
+    "company": "VirtueTech Recruitment Group",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4416899315/",
+    "job_title": "Senior Finance Analyst | D2C Consumer Brand",
+    "company": "Talentedge",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Are you legally authorized to work in the United Kingdom?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: right_to_work"
+      },
+      {
+        "action": "SELECT",
+        "index": 2,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4416899315-20825377105-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4417635722/",
+    "job_title": "Analyst/Associate - Hotels, Asset Management",
+    "company": "Cobalt Recruitment",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4420412097/",
+    "job_title": "Senior Risk Analyst",
+    "company": "Arthur Recruitment",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4417813021/",
+    "job_title": "Financial Analyst",
+    "company": "Goodman Masson",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Are you legally authorized to work in the United Kingdom?",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: right_to_work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Will you now or in the future require sponsorship for employment visa status?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Do you have the right to work in the UK?",
+        "field_type": "select",
+        "options": [
+          "Select an option",
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "SELECT",
+        "index": 6,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4417813021-30149497308-multipleChoice",
+        "value": "Yes"
+      },
+      {
+        "action": "SELECT",
+        "index": 8,
+        "label": "text-entity-list-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4417813021-30149497300-multipleChoice",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4415286911/",
+    "job_title": "Portfolio Monitoring Analyst \u2013 Growing Private Equity firm \u2013 Excellent Compensation",
+    "company": "Mondrian Alpha",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4426417026/",
+    "job_title": "Senior Oracle Financials Support Analyst",
+    "company": "Superdrug",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "How many years of experience do you have with Oracle Financials?",
+        "field_type": "text",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "What is your expected salary?",
+        "field_type": "text",
+        "options": null,
+        "answer": "64000",
+        "confidence": "high",
+        "source": "question_patterns: salary|compensation|expected.*pay"
+      },
+      {
+        "action": "FILL",
+        "index": 2,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426417026-21021418825-numeric",
+        "value": "5"
+      },
+      {
+        "action": "FILL",
+        "index": 4,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426417026-21021418809-numeric",
+        "value": "64000"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Oracle EBS?",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Oracle Financials support?",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "What is your notice period in weeks?",
+        "field_type": "number",
+        "options": null,
+        "answer": "1 month",
+        "confidence": "high",
+        "source": "question_patterns: notice period|notice"
+      },
+      {
+        "action": "FILL",
+        "index": 4,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4426417026-21021418809-numeric",
+        "value": "4"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4430985080/",
+    "job_title": "Mortgage Pricing Data Analyst",
+    "company": "Alphayotta",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Pricing",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Data Analysis",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have with Mortgage",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Are you legally authorized to work in the United Kingdom",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: right_to_work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Will you now or in the future require sponsorship for employment visa status",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "question_patterns: sponsorship|visa|authorization|right to work"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Do you have experience working in the financial services or mortgage industry",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: age_confirmation (applicant is 30)"
+      },
+      {
+        "action": "FILL",
+        "index": 2,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4430985080-33310550946-numeric",
+        "value": "5"
+      },
+      {
+        "action": "FILL",
+        "index": 4,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4430985080-33310550938-numeric",
+        "value": "5"
+      },
+      {
+        "action": "FILL",
+        "index": 6,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4430985080-33310550970-numeric",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4425494044/",
+    "job_title": "FP&A Analyst",
+    "company": "Investigo",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "Are you legally authorized to work in the United Kingdom?",
+        "field_type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": "Yes",
+        "confidence": "high",
+        "source": "common_sense: right_to_work"
+      }
+    ]
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4428931575/",
+    "job_title": "Analyst to Associate - TMT",
+    "company": "Metis Search",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4413608013/",
+    "job_title": "Operations Analyst - Hedge Fund - \u00a3125-175k TC",
+    "company": "Mondrian Alpha",
+    "status": "scanned",
+    "questions_and_answers": []
+  },
+  {
+    "job_url": "https://www.linkedin.com/jobs/view/4391645383/",
+    "job_title": "Investment Banking Analyst",
+    "company": "Swiss Finance",
+    "status": "scanned",
+    "questions_and_answers": [
+      {
+        "action": "lookup_answer",
+        "question": "How many years of experience do you have in investment banking?",
+        "field_type": "text",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "How many years of work experience do you have?",
+        "field_type": "text",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Years of investment banking experience",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "lookup_answer",
+        "question": "Years of financial services experience",
+        "field_type": "number",
+        "options": null,
+        "answer": "5 years total, including 2.5 years in financial services",
+        "confidence": "high",
+        "source": "question_patterns: years.*experience|experience.*years"
+      },
+      {
+        "action": "FILL",
+        "index": 2,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4391645383-26853563900-numeric",
+        "value": "5"
+      },
+      {
+        "action": "FILL",
+        "index": 4,
+        "label": "single-line-text-form-component-formElement-urn-li-jobs-applyformcommon-easyApplyFormElement-4391645383-26853563932-numeric",
+        "value": "3"
+      }
+    ]
+  }
+]

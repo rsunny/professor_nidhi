@@ -34,8 +34,16 @@ PLATFORM_LOGIN_URL_PATTERNS = [
 
 
 def get_client():
-    """Get Anthropic client."""
+    """Get Anthropic client — uses AWS Bedrock if USE_BEDROCK=1, else direct API."""
     import anthropic
+
+    if os.getenv("USE_BEDROCK", "0") == "1":
+        from anthropic import AnthropicBedrock
+        return AnthropicBedrock(
+            aws_access_key=os.getenv("AWS_ACCESS_KEY_ID", ""),
+            aws_secret_key=os.getenv("AWS_SECRET_ACCESS_KEY", ""),
+            aws_region=os.getenv("AWS_REGION", "us-east-1"),
+        )
     return anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
 
 
@@ -204,7 +212,7 @@ RULES: Respond with ONLY JSON. Fill email first, then password, then click Sign 
             messages.append({"role": "user", "content": f"Step {step+1}:\n{snapshot}\nAction?"})
 
             response = client.messages.create(
-                model="claude-haiku-4-5-20251001",
+                model=os.getenv("ANTHROPIC_MODEL", "us.anthropic.claude-opus-4-6-v1"),
                 max_tokens=200,
                 system=system_prompt,
                 messages=messages,
@@ -512,7 +520,7 @@ async def ai_navigate(page: Page, job: dict, application_data: dict, mode: str =
         })
 
         response = client.messages.create(
-            model="claude-haiku-4-5-20251001",
+            model=os.getenv("ANTHROPIC_MODEL", "us.anthropic.claude-opus-4-6-v1"),
             max_tokens=500,
             system=system_prompt,
             messages=messages,
@@ -552,8 +560,8 @@ async def ai_navigate(page: Page, job: dict, application_data: dict, mode: str =
                 if not success:
                     messages.append({"role": "user", "content": "That element was not found or could not be clicked. Try a different approach."})
                 else:
-                    # Wait for navigation/modal/new tab to load
-                    await random_delay(1.5, 3)
+                    # Wait longer for LinkedIn modals/pages to load (human-like)
+                    await random_delay(5, 10)
 
                     # Check if a new tab was opened
                     pages_after = context.pages
@@ -566,6 +574,7 @@ async def ai_navigate(page: Page, job: dict, application_data: dict, mode: str =
                             await new_page.wait_for_load_state("domcontentloaded", timeout=15000)
                         except Exception:
                             pass
+                        await random_delay(3, 5)
                         print(f"    [ai] New tab opened: {new_page.url[:80]}...")
                         active_page = new_page
                         opened_pages.append(new_page)
@@ -587,8 +596,8 @@ async def ai_navigate(page: Page, job: dict, application_data: dict, mode: str =
                         # Otherwise, AI will see the new page state on next loop
                     else:
                         # Same page — modal may have opened or page navigated
-                        # AI will see the updated state on next loop iteration
-                        await random_delay(0.5, 1)
+                        # Wait for any modal/overlay to finish loading
+                        await random_delay(3, 5)
 
             elif action_type == "FILL":
                 idx = action.get("index")
@@ -615,7 +624,7 @@ async def ai_navigate(page: Page, job: dict, application_data: dict, mode: str =
                 await random_delay(1, 2)
 
             elif action_type == "WAIT":
-                await random_delay(2, 4)
+                await random_delay(5, 10)  # Generous wait for LinkedIn to load
 
             elif action_type == "SKIP":
                 result["status"] = "skipped"
@@ -770,10 +779,11 @@ LINKEDIN CREDENTIALS (for LinkedIn sign-in ONLY):
     mode_instruction = ""
     if mode == "scan":
         mode_instruction = """
-MODE: TEST (DRY RUN) — Fill in ALL fields to verify data works, but do NOT click the final Submit button.
-- Navigate to the form (click Apply, handle sign-in, click through to the form)
+MODE: FILL & PAUSE — Fill in ALL fields, but do NOT click the final Submit button. User will verify and submit.
+- Navigate to the form (click Apply/Easy Apply, handle sign-in, click through to the form)
 - Fill every field you can with the applicant's data
-- Upload resume and cover letter where possible
+- IMPORTANT: When you see a Resume/CV upload section, ALWAYS upload the resume file — even if one is already there, replace it with the latest one
+- Upload cover letter wherever possible
 - Click "Next" to go through all form pages/steps
 - For any question you don't have an answer to, use UNKNOWN_QUESTION
 - When you reach the FINAL Submit/Apply button (the last step), DO NOT click it
@@ -826,24 +836,28 @@ SIGN-IN HANDLING:
   → Basically: if you get STUCK at any login/auth barrier you cannot pass, use PLATFORM_LOGIN immediately — don't keep retrying
 
 NAVIGATION FLOW:
-1. On the LinkedIn job page, find and click "Apply" or "Easy Apply"
-2. If a LinkedIn sign-in dialog appears → sign in using credentials above
-3. If a new page/tab loads, look for:
+1. The Easy Apply button may have ALREADY been clicked — if you see a form/modal, start filling it immediately
+2. If you're still on the job page, find and click "Apply" or "Easy Apply"
+3. If a LinkedIn sign-in dialog appears → sign in using credentials above
+4. If a new page/tab loads, look for:
    a. "Apply with LinkedIn" button → click it (preferred on third-party sites)
    b. Another "Apply" button → click it to reach the form
    c. A login/register page with NO LinkedIn option → PLATFORM_LOGIN
-4. Keep clicking Apply/Continue until you reach the actual application form
-5. Once the form is visible, fill in fields and proceed
-6. For Easy Apply modals: fill fields → upload resume + cover letter → click Next → repeat → Submit
-7. For external forms: fill fields → upload files → Submit
-8. If at any point you encounter a platform login with NO LinkedIn option → PLATFORM_LOGIN
+5. Keep clicking Apply/Continue until you reach the actual application form
+6. Once the form is visible, fill in fields and proceed
+7. For Easy Apply modals: fill fields → upload resume + cover letter → click Next → repeat → Submit
+8. For external forms: fill fields → upload files → Submit
+9. If at any point you encounter a platform login with NO LinkedIn option → PLATFORM_LOGIN
 
 FORM FILLING:
 - If a field is already filled correctly, don't change it
 - If you see a question you can't answer from the data above, use UNKNOWN_QUESTION
 - For yes/no questions about sponsorship: answer Yes
+- For yes/no questions about "legally authorized to work": answer Yes
+- For yes/no questions about "comfortable commuting": answer Yes
 - For "how did you hear about us": LinkedIn
-- ALWAYS upload both resume AND cover letter when file inputs are available
+- RESUME: ALWAYS upload the resume file when you see a resume/CV upload section. Even if one is already attached, upload the latest one to replace it.
+- COVER LETTER: Upload when a cover letter input is available
 - If the job is expired, removed, or not found: use SKIP with reason "Job expired or no longer available"
 - After clicking Submit successfully, use DONE with status="applied"
 

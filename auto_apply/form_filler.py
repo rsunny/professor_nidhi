@@ -99,8 +99,16 @@ def match_yes_no(label_text: str) -> str | None:
     answers = get_answers()
     label_lower = label_text.lower()
 
-    # Sponsorship/visa questions → Yes
-    if re.search(r"sponsorship|visa|authoriz", label_lower):
+    # Work authorization → Yes (legally authorized to work in UK)
+    if re.search(r"legally\s*authori[sz]ed\s*to\s*work|right\s*to\s*work|eligible\s*to\s*work", label_lower):
+        return "Yes"
+
+    # Sponsorship/visa questions → Yes (Nidhi requires sponsorship)
+    if re.search(r"sponsorship|require.*visa|visa\s*status", label_lower):
+        return "Yes"
+
+    # Comfortable commuting → Yes
+    if re.search(r"commut|comfortable.*location|willing.*travel|travel.*office", label_lower):
         return "Yes"
 
     # Criminal/conviction → No
@@ -111,7 +119,7 @@ def match_yes_no(label_text: str) -> str | None:
     if re.search(r"background\s*check", label_lower):
         return "Yes"
 
-    # Disability → No
+    # Disability → Prefer not to say / No
     if re.search(r"disabilit", label_lower):
         return "No"
 
@@ -122,6 +130,14 @@ def match_yes_no(label_text: str) -> str | None:
     # Currently employed → Yes
     if re.search(r"currently\s*employ", label_lower):
         return "Yes"
+
+    # 18+ / legal age → Yes
+    if re.search(r"18\s*years|legal\s*age|over\s*18", label_lower):
+        return "Yes"
+
+    # Gender related → Female
+    if re.search(r"gender|sex\b", label_lower):
+        return "Female"
 
     return None
 

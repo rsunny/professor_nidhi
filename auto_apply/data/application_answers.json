@@ -85,10 +85,6 @@
     "disability|disabled": "No",
     "criminal|conviction": "No",
     "background check": "Yes",
-    "python": "Intermediate - built reconciliation and automation tools using pandas and numpy",
-    "excel": "Advanced - VBA, Power Query, Pivot Tables",
-    "bloomberg": "Yes - daily use at Morgan Stanley for trade matching and market data",
-    "sql": "Conceptual knowledge of queries and database structure",
     "education|degree|qualification": "MSc Investment and Risk Finance (Distinction), University of Westminster, 2022"
   }
 }
