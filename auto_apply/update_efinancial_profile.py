@@ -254,22 +254,102 @@ async def update_experience(page: Page):
     """Add experience entries."""
     print("\n  --- Updating EXPERIENCE section ---")
 
-    # Only try first entry for now (debugging)
-    exp = EXPERIENCE[0]
-    print(f"\n  Adding: {exp['title']} at {exp['company']}")
+    for exp in EXPERIENCE:
+        print(f"\n  Adding: {exp['title']} at {exp['company']}")
 
-    # Click "Add Experience" button
-    add_exp = page.locator('[data-gtm-trackable="Add Experience"]')
-    try:
-        await add_exp.click(timeout=5000)
+        # Click "Add Experience" button
+        add_exp = page.locator('[data-gtm-trackable="Add Experience"]')
+        try:
+            await add_exp.click(timeout=5000)
+            await asyncio.sleep(3)
+            print("  Clicked Add Experience")
+        except Exception as e:
+            print(f"  Could not click Add Experience: {e}")
+            continue
+
+        # Fill the form
+        await fill_experience_form(page, exp)
+
+        # Navigate back to profile for next entry
+        await page.goto("https://www.efinancialcareers.co.uk/myefc/profile", wait_until="domcontentloaded")
         await asyncio.sleep(3)
-        print("  Clicked Add Experience")
-    except Exception as e:
-        print(f"  Could not click Add Experience: {e}")
-        return
 
-    # Try to fill form fields
-    await fill_experience_form(page, exp)
+
+async def fill_efc_dropdown(page: Page, label_text: str, value: str):
+    """Fill a custom efc-form-dropdown-input by clicking the toggle and selecting a value.
+
+    These dropdowns use Angular's dropdown directive with dropdowntoggle divs.
+    """
+    try:
+        # Find the dropdown toggle that contains the matching label text
+        # The structure is: <div dropdowntoggle>...<label>Start Month *</label>...</div>
+        toggle = page.locator(f'[dropdowntoggle]:has(label:has-text("{label_text}"))')
+
+        if not await toggle.is_visible(timeout=3000):
+            # Try alternative: find the label and get its parent toggle
+            toggle = page.locator(f'label:has-text("{label_text}")').locator('..')
+            if not await toggle.is_visible(timeout=2000):
+                print(f"    {label_text}: dropdown toggle not found")
+                return
+
+        # Click to open the dropdown
+        await toggle.click()
+        await asyncio.sleep(1)
+
+        # Look for the dropdown menu items
+        # ngx-bootstrap dropdowns typically render items in a ul.dropdown-menu or similar
+        dropdown_item = page.locator(f'.dropdown-menu li:has-text("{value}"), .dropdown-menu button:has-text("{value}"), .dropdown-menu a:has-text("{value}"), [role="menu"] [role="menuitem"]:has-text("{value}"), .dropdown-menu .dropdown-item:has-text("{value}")')
+
+        try:
+            if await dropdown_item.first.is_visible(timeout=3000):
+                await dropdown_item.first.click()
+                await asyncio.sleep(0.5)
+                print(f"    {label_text}: selected '{value}'")
+                return
+        except Exception:
+            pass
+
+        # Try broader search - any clickable element with the value text inside the dropdown
+        all_items = page.locator(f'.dropdown-menu *:has-text("{value}")')
+        try:
+            for i in range(await all_items.count()):
+                item = all_items.nth(i)
+                if await item.is_visible():
+                    tag = await item.evaluate("el => el.tagName")
+                    if tag in ['LI', 'A', 'BUTTON', 'SPAN', 'DIV']:
+                        await item.click()
+                        await asyncio.sleep(0.5)
+                        print(f"    {label_text}: selected '{value}' (tag={tag})")
+                        return
+        except Exception:
+            pass
+
+        # If nothing found, list what IS in the dropdown
+        menu_items = await page.evaluate("""() => {
+            const menus = document.querySelectorAll('.dropdown-menu, [role="menu"], ul[class*="dropdown"]');
+            const items = [];
+            for (const menu of menus) {
+                if (menu.getBoundingClientRect().height > 0) {
+                    const children = menu.querySelectorAll('li, a, button, [role="menuitem"]');
+                    for (const child of children) {
+                        const text = (child.innerText || '').trim();
+                        if (text) items.push(text.substring(0, 40));
+                    }
+                }
+            }
+            return items;
+        }""")
+        if menu_items:
+            print(f"    {label_text}: could not find '{value}', available: {menu_items[:10]}")
+        else:
+            print(f"    {label_text}: no dropdown menu appeared after click")
+
+        # Close dropdown by pressing Escape
+        await page.keyboard.press("Escape")
+        await asyncio.sleep(0.5)
+
+    except Exception as e:
+        print(f"    {label_text} dropdown error: {e}")
 
 
 async def fill_typeahead(page: Page, selector: str, value: str, field_name: str, short_text: str = "") -> bool:
@@ -377,140 +457,90 @@ async def fill_experience_form(page: Page, exp: dict):
     # Wait for modal to fully render
     await asyncio.sleep(2)
 
-    # Set up network interception to catch ALL API calls
-    all_api_calls = []
-    def on_response(response):
-        url = response.url
-        if "fsdm" in url or "api" in url or "typeahead" in url:
-            all_api_calls.append(f"{response.status} {url[:120]}")
-    page.on("response", on_response)
+    # 1. Job Title — typeahead
+    # Use the actual title to search, but only first few words for the typeahead trigger
+    title_search = exp["title"].split(" - ")[0].split()[:2]  # e.g., ["Trade", "Support"] or ["Operations", "Analyst"]
+    await fill_typeahead(page, '#jobTitle', exp["title"].split(" - ")[0], "title", short_text=" ".join(title_search))
 
-    # 1. Job Title — try "Trade Support" for more specific match
-    await fill_typeahead(page, '#jobTitle', "Trade Support Analyst", "title", short_text="Trade Support")
+    # 2. Company Name — plain text input (no typeahead)
+    company_input = page.locator('#companyName')
+    try:
+        await company_input.click()
+        await asyncio.sleep(0.3)
+        await page.keyboard.press("Control+a")
+        await page.keyboard.press("Backspace")
+        await page.keyboard.type(exp["company"], delay=50)
+        await asyncio.sleep(0.5)
+        # Blur to trigger validation
+        await page.keyboard.press("Tab")
+        await asyncio.sleep(0.5)
+        print(f"    company: typed '{exp['company']}'")
+    except Exception as e:
+        print(f"    company error: {e}")
 
-    print(f"    API calls after title: {all_api_calls}")
-    all_api_calls.clear()
+    # 3. Fill DATES — these are custom efc-form-dropdown-input components
+    # They use dropdowntoggle divs (NOT native select elements)
+    # Need to click to open, then select from dropdown menu
 
-    # 2. Company Name — try typing full name slowly
-    # First, manually test the API endpoint
-    company_api_test = await page.evaluate("""async () => {
-        try {
-            const resp = await fetch('https://fsdm.efinancialcareers.com/v2/typeahead/companies?filterTerm=Morgan');
-            if (resp.ok) {
-                const data = await resp.json();
-                return JSON.stringify(data).substring(0, 500);
-            }
-            return `status: ${resp.status}`;
-        } catch(e) {
-            return `error: ${e.message}`;
-        }
-    }""")
-    print(f"    Company API test: {company_api_test}")
+    # Start Month
+    await fill_efc_dropdown(page, "Start Month", exp.get("start_month", "September"))
+    # Start Year
+    await fill_efc_dropdown(page, "Start Year", exp.get("start_year", "2022"))
 
-    await fill_typeahead(page, '#companyName', exp["company"], "company", short_text="Morgan Stanley")
-    print(f"    API calls after company: {all_api_calls}")
-    all_api_calls.clear()
-
-    # 3. Uncheck "current work" if not current role
+    # 4. Uncheck "current work" if not current role (to show end dates)
     if not exp.get("current", False):
+        current_cb = page.locator('#currentWork')
         try:
-            # Use JavaScript to uncheck and trigger Angular change detection
-            result = await page.evaluate("""() => {
-                const cb = document.querySelector('#currentWork');
-                if (!cb) return 'not found';
-                const wasBefore = cb.checked;
-                cb.checked = false;
-                cb.dispatchEvent(new Event('change', { bubbles: true }));
-                cb.dispatchEvent(new Event('input', { bubbles: true }));
-                // Also try clicking the label if it exists
-                const label = document.querySelector('label[for="currentWork"]');
-                if (label && wasBefore) label.click();
-                return `was=${wasBefore}, now=${cb.checked}`;
-            }""")
-            print(f"    CurrentWork checkbox: {result}")
-            await asyncio.sleep(2)
+            if await current_cb.is_visible(timeout=2000):
+                is_checked = await current_cb.is_checked()
+                if is_checked:
+                    await current_cb.click()
+                    await asyncio.sleep(1)
+                    print(f"    Unchecked 'current work'")
+                else:
+                    print(f"    CurrentWork already unchecked")
         except Exception as e:
             print(f"    Checkbox error: {e}")
 
-    # 4. Location — typeahead (shorter text)
+        await asyncio.sleep(1)
+
+        # End Month
+        await fill_efc_dropdown(page, "End Month", exp.get("end_month", "April"))
+        # End Year
+        await fill_efc_dropdown(page, "End Year", exp.get("end_year", "2024"))
+
+    # 5. Location — typeahead
     location_short = exp["location"].split(",")[0]  # e.g., "Glasgow"
     await fill_typeahead(page, '#workingLocation', exp["location"], "location", short_text=location_short)
 
-    # 5. Dump full modal HTML to understand form structure
+    # 5. Check if save button is enabled now
     await asyncio.sleep(1)
 
-    modal_info = await page.evaluate("""() => {
-        const modal = document.querySelector('modal-container');
-        if (!modal) return {html: 'no modal', elements: []};
-
-        // Get form-related elements
-        const results = [];
-        const els = modal.querySelectorAll('input, textarea, select, button, label, form, [formcontrolname], [ngmodel]');
-        for (const el of els) {
-            const tag = el.tagName.toLowerCase();
-            const rect = el.getBoundingClientRect();
-            const classStr = (typeof el.className === 'string') ? el.className : (el.className.baseVal || '');
-            results.push({
-                tag: tag,
-                type: el.getAttribute('type') || '',
-                id: el.getAttribute('id') || '',
-                name: el.getAttribute('name') || '',
-                fc: el.getAttribute('formcontrolname') || '',
-                cls: classStr.substring(0, 120),
-                value: (el.value || '').substring(0, 50),
-                text: (el.innerText || '').substring(0, 60),
-                visible: rect.width > 0 && rect.height > 0,
-                disabled: el.disabled || false,
-                required: el.required || el.hasAttribute('required'),
-                checked: el.checked || false,
-            });
-        }
-        return {html: modal.innerHTML.substring(0, 8000), elements: results};
+    btn_disabled = await page.evaluate("""() => {
+        const btn = document.querySelector('modal-container button[type="submit"]');
+        return btn ? btn.disabled : null;
     }""")
+    print(f"    Save button disabled: {btn_disabled}")
 
-    print(f"\n    Full modal elements ({len(modal_info['elements'])} found):")
-    for item in modal_info['elements']:
-        vis = "V" if item['visible'] else "H"
-        req = " REQ" if item['required'] else ""
-        val = f" val='{item['value'][:30]}'" if item['value'] else ""
-        fc = f" fc='{item['fc']}'" if item['fc'] else ""
-        chk = " CHECKED" if item.get('checked') else ""
-        cls_short = ""
-        if 'invalid' in item.get('cls', '') or 'ng-invalid' in item.get('cls', ''):
-            cls_short = " NG-INVALID"
-        if 'ng-valid' in item.get('cls', '') and 'ng-invalid' not in item.get('cls', ''):
-            cls_short = " NG-VALID"
-        print(f"      [{vis}] <{item['tag']} id='{item['id']}' type='{item['type']}'{fc}{val}{req}{chk}{cls_short}>")
-
-    # Print relevant class info for inputs
-    print(f"\n    Input classes (Angular validation state):")
-    for item in modal_info['elements']:
-        if item['tag'] == 'input' and item['visible']:
-            print(f"      #{item['id']}: {item['cls'][:120]}")
-
-    # 8. Try to save — force-enable the button and submit
+    # 8. Try to save
     await asyncio.sleep(1)
 
-    # Check if save button exists
     save_btn = page.locator('modal-container button[type="submit"]')
     try:
         if await save_btn.first.is_visible(timeout=3000):
-            # Force-enable the button via JS (Angular disabled attr check is buggy)
-            await page.evaluate("""() => {
-                const btn = document.querySelector('modal-container button[type="submit"]');
-                if (btn) {
-                    btn.removeAttribute('disabled');
-                    btn.classList.remove('disabled');
-                    btn.disabled = false;
-                }
-            }""")
-            await asyncio.sleep(0.5)
+            is_disabled = await save_btn.first.is_disabled()
+            if is_disabled:
+                print(f"    Save still disabled — force-enabling...")
+                await page.evaluate("""() => {
+                    const btn = document.querySelector('modal-container button[type="submit"]');
+                    if (btn) { btn.removeAttribute('disabled'); btn.disabled = false; }
+                }""")
+                await asyncio.sleep(0.5)
 
-            # Click with force=True to bypass actionability checks
-            await save_btn.first.click(force=True, timeout=5000)
+            await save_btn.first.click(force=True, timeout=10000)
             await asyncio.sleep(4)
 
-            # Check if modal closed (success) or still open (failure)
+            # Check if modal closed
             try:
                 modal_visible = await page.locator('modal-container').is_visible(timeout=2000)
             except Exception:
@@ -519,16 +549,11 @@ async def fill_experience_form(page: Page, exp: dict):
             if not modal_visible:
                 print(f"    Experience saved successfully!")
             else:
-                # Modal still open — Angular rejected the submission
-                # Try setting Angular model directly via component
-                print(f"    Modal still open after submit — trying Angular model injection...")
-                success = await angular_inject_experience(page, exp)
-                if not success:
-                    print(f"    Could not save — cancelling")
-                    cancel_btn = page.locator('button:has-text("Cancel")')
-                    if await cancel_btn.is_visible():
-                        await cancel_btn.click()
-                        await asyncio.sleep(2)
+                print(f"    Save failed — cancelling")
+                cancel_btn = page.locator('button:has-text("Cancel")')
+                if await cancel_btn.is_visible():
+                    await cancel_btn.click()
+                    await asyncio.sleep(2)
     except Exception as e:
         print(f"    Save error: {e}")
         cancel_btn = page.locator('button:has-text("Cancel")')
@@ -540,131 +565,6 @@ async def fill_experience_form(page: Page, exp: dict):
             pass
 
 
-async def angular_inject_experience(page: Page, exp: dict) -> bool:
-    """Try to inject values and submit via Angular component internals."""
-    try:
-        # Approach 1: Find the Angular component and try to call its submit/save method
-        result = await page.evaluate("""() => {
-            const modal = document.querySelector('modal-container');
-            if (!modal) return 'no modal';
-
-            // Walk up from the button to find Angular component
-            const btn = modal.querySelector('button[type="submit"]');
-            if (!btn) return 'no btn';
-
-            // Try ng.getComponent on various elements
-            const results = [];
-
-            // Check if ng API is available
-            if (typeof ng === 'undefined') {
-                results.push('ng not available (prod mode)');
-            } else {
-                // Try to get component from modal children
-                const children = modal.querySelectorAll('[_nghost-ng-c579259638]');
-                for (const child of children) {
-                    try {
-                        const comp = ng.getComponent(child);
-                        if (comp) {
-                            const methods = Object.getOwnPropertyNames(Object.getPrototypeOf(comp)).filter(m => m !== 'constructor');
-                            results.push(`Component found! Methods: ${methods.join(', ')}`);
-                        }
-                    } catch(e) {}
-                }
-            }
-
-            // Check button's click listeners and disabled binding
-            results.push(`btn disabled=${btn.disabled}`);
-            results.push(`btn outerHTML=${btn.outerHTML.substring(0, 200)}`);
-
-            // Look for the component's internal state by checking __ngContext__
-            let el = modal.firstElementChild;
-            let depth = 0;
-            while (el && depth < 5) {
-                if (el.__ngContext__) {
-                    results.push(`Found __ngContext__ at depth ${depth}, tag=${el.tagName}`);
-                    // Try to find the form state in the context
-                    const ctx = el.__ngContext__;
-                    if (Array.isArray(ctx)) {
-                        for (let i = 0; i < Math.min(ctx.length, 50); i++) {
-                            const item = ctx[i];
-                            if (item && typeof item === 'object' && item.constructor && item.constructor.name) {
-                                const name = item.constructor.name;
-                                if (name.includes('Component') || name.includes('Form') || name.includes('Modal')) {
-                                    results.push(`  ctx[${i}] = ${name}`);
-                                    // Check for save/submit method
-                                    const proto = Object.getPrototypeOf(item);
-                                    const methods = Object.getOwnPropertyNames(proto).filter(m => m !== 'constructor');
-                                    if (methods.length) results.push(`    methods: ${methods.slice(0, 15).join(', ')}`);
-                                    // Check properties
-                                    const props = Object.keys(item).filter(k => !k.startsWith('_'));
-                                    if (props.length) results.push(`    props: ${props.slice(0, 15).join(', ')}`);
-                                }
-                            }
-                        }
-                    }
-                    break;
-                }
-                el = el.firstElementChild;
-                depth++;
-            }
-
-            return results.join('\\n');
-        }""")
-        print(f"    Angular component analysis:\n{result}")
-
-        # Approach 2: Try to find and call save method via the component
-        submit_result = await page.evaluate("""() => {
-            const modal = document.querySelector('modal-container');
-            if (!modal) return 'no modal';
-
-            // Try to find component with save/submit method
-            let el = modal.firstElementChild;
-            while (el) {
-                if (el.__ngContext__ && Array.isArray(el.__ngContext__)) {
-                    for (const item of el.__ngContext__) {
-                        if (item && typeof item === 'object') {
-                            // Look for save/submit/onSave methods
-                            const proto = Object.getPrototypeOf(item);
-                            if (proto) {
-                                const methods = Object.getOwnPropertyNames(proto);
-                                const saveMethod = methods.find(m =>
-                                    m.toLowerCase().includes('save') ||
-                                    m.toLowerCase().includes('submit') ||
-                                    m.toLowerCase().includes('confirm')
-                                );
-                                if (saveMethod && typeof item[saveMethod] === 'function') {
-                                    try {
-                                        item[saveMethod]();
-                                        return `Called ${saveMethod}() on ${item.constructor.name}`;
-                                    } catch(e) {
-                                        return `Error calling ${saveMethod}: ${e.message}`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                el = el.firstElementChild;
-            }
-            return 'no save method found';
-        }""")
-        print(f"    Submit attempt: {submit_result}")
-
-        await asyncio.sleep(3)
-
-        # Check if modal closed
-        try:
-            modal_visible = await page.locator('modal-container').is_visible(timeout=2000)
-        except Exception:
-            modal_visible = False
-
-        if not modal_visible:
-            print(f"    Experience saved via Angular method call!")
-            return True
-        return False
-    except Exception as e:
-        print(f"    Angular inject error: {e}")
-        return False
 
 
 # ---------------------------------------------------------------------------
@@ -756,11 +656,17 @@ async def main():
         await asyncio.sleep(5)
         print(f"  On profile page: {page.url}")
 
-        # About and Skills already saved — just do experience now
-        # await update_about(page)
-        # await update_skills(page)
+        # Update all sections
+        await update_about(page)
 
-        # Only do experience (the problematic one)
+        # Re-navigate for skills
+        await page.goto("https://www.efinancialcareers.co.uk/myefc/profile", wait_until="domcontentloaded")
+        await asyncio.sleep(3)
+        await update_skills(page)
+
+        # Re-navigate for experience
+        await page.goto("https://www.efinancialcareers.co.uk/myefc/profile", wait_until="domcontentloaded")
+        await asyncio.sleep(3)
         await update_experience(page)
 
         print(f"\n{'=' * 60}")

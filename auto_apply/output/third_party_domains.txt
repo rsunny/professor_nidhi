@@ -1,0 +1,6 @@
+=== Third-Party Domains That Need Login ===
+
+From Reed jobs that redirect externally:
+
+Login required:
+  
