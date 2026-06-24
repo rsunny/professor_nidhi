@@ -1,0 +1,2002 @@
+[
+  {
+    "company": "Goldman Sachs International",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "J.P. Morgan",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Morgan Stanley",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Bank of America",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Citigroup",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Barclays",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Deutsche Bank",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "UBS",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "HSBC",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "NatWest Markets",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Nomura International",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Macquarie Group",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Jefferies International",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "RBC Capital Markets",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "TD Securities",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Mizuho International",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "SMBC Nikko Capital Markets",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "BNP Paribas",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Societe Generale",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Standard Chartered Bank",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Lloyds Banking Group",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Credit Agricole CIB",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "MUFG Securities",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Daiwa Capital Markets",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Canaccord Genuity",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Stifel Nicolaus Europe",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Peel Hunt",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Numis Securities",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Berenberg",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Liberum Capital",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Investec Bank",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "CLSA (Citic Securities)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "China International Capital Corporation (CICC)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Haitong International Securities",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Samsung Securities",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Kotak Mahindra (UK)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "BlackRock",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Vanguard Asset Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Fidelity International",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Schroders",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "abrdn (Aberdeen)",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Legal & General Investment Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "M&G Investments",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Jupiter Asset Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Janus Henderson Investors",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "T. Rowe Price International",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Franklin Templeton",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Invesco",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Columbia Threadneedle",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "PIMCO Europe",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Wellington Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "State Street Global Advisors",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Amundi Asset Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Ninety One",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Man Group",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Baillie Gifford",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Polar Capital",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Rathbone Investment Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Brooks Macdonald",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Artemis Investment Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Liontrust Asset Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Premier Miton Group",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Pictet Asset Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Lombard Odier",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "GAM International Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Lazard Asset Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Neuberger Berman",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "AllianceBernstein",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Federated Hermes",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Capital Group",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Dimensional Fund Advisors",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Merian Global Investors",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "River and Mercantile",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Waverton Investment Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Guinness Asset Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Ashmore Group",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Citadel Europe",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Two Sigma International",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Bridgewater Associates",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Millennium Capital Partners",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Point72 Europe",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "D.E. Shaw",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Brevan Howard",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Marshall Wace",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Winton Group",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Capula Investment Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "BlueCrest Capital Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Aspect Capital",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "GSA Capital Partners",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "AQR Capital Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Systematica Investments",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Lansdowne Partners",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Egerton Capital",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Tudor Investment Corp",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Balyasny Asset Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "ExodusPoint Capital Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Sculptor Capital Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Eisler Capital",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Rokos Capital Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "TCI Fund Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Davidson Kempner",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Cheyne Capital Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "CQS",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Arrowgrass Capital Partners",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Polygon Global Partners",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Algebris Investments",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Caxton Associates",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Moore Capital Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Och-Ziff (Sculptor)",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Soros Fund Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Elliot Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Ares Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Canyon Partners",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Paloma Partners",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Pharo Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "Graham Capital Management",
+    "category": "Hedge Funds"
+  },
+  {
+    "company": "KKR",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Blackstone",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "The Carlyle Group",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Apollo Global Management",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "CVC Capital Partners",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Permira",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "BC Partners",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Apax Partners",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Advent International",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "EQT Partners",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Bridgepoint",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "3i Group",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Cinven",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Warburg Pincus",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Bain Capital",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Ardian",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "PAI Partners",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "ICG (Intermediate Capital Group)",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "HgCapital",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Oakley Capital",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Actis",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "British International Investment (BII/CDC)",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Index Ventures",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Balderton Capital",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Atomico",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "General Atlantic",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "TPG Capital",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Silver Lake",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Vista Equity Partners",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Hellman & Friedman",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "BNY Mellon",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "State Street",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Northern Trust",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Citco Fund Services",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "SS&C Technologies",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Apex Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "IQ-EQ",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Alter Domus",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Vistra Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "JTC plc",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Caceis",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "HSBC Securities Services",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Broadridge Financial Solutions",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "FNZ Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Link Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Maitland Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Waystone Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Ocorian",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Intertrust Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "TMF Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Aztec Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Sanne Group (now Apex)",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Langham Hall",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Ipes Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Crestbridge",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Mainstream Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "RBC Investor Services",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "CACEIS Investor Services",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "SEI Investments",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Brown Brothers Harriman",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "London Stock Exchange Group (LSEG)",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Intercontinental Exchange (ICE)",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "CME Group",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "LCH (Clearing)",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Cboe Europe",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Tradeweb",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Bloomberg LP",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "DTCC",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "CLS Group",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Euronext",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "MarketAxess",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Liquidnet",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Euroclear",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Clearstream",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "SWIFT",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Depository Trust Company",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Aviva",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Lloyd's of London",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "AIG",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Zurich Insurance",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Allianz",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Swiss Re",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Munich Re",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Prudential",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Aon",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Willis Towers Watson (WTW)",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Marsh McLennan",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Hiscox",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Beazley",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Lancashire Holdings",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Brit Insurance",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Starr International",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "MS Amlin",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Tokio Marine Kiln",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Canopius Group",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Chaucer",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "QBE Insurance",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Liberty Specialty Markets",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Aspen Insurance",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Convex Group",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Fidelis Insurance",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Conduit Re",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Axis Capital",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "RenaissanceRe",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Everest Re Group",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Gallagher",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Revolut",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Monzo Bank",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Starling Bank",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "OakNorth Bank",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Wise (TransferWise)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Checkout.com",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "WorldRemit",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Funding Circle",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "GoCardless",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Thought Machine",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "10x Banking",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Finastra",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Temenos",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Murex",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Calypso Technology (Adenza)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "ION Trading",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "SimCorp",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "SIX Group",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "FactSet",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "S&P Global Market Intelligence",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "MSCI",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Morningstar",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Preqin",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "PitchBook Data",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Dealogic",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Refinitiv (LSEG)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Moody's Analytics",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Clearwater Analytics",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Enfusion",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "FIS (Fidelity National Info Services)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Worldpay (FIS)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Adyen",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Stripe",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Square (Block)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "SumUp",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Rapyd",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Nuvei",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Railsr (Railsbank)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "TrueLayer",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Plaid",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "TP ICAP",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "BGC Partners",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Tradition",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Marex Group",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "StoneX Financial",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Interactive Brokers",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "IG Group",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "CMC Markets",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "XTX Markets",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Virtu Financial",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Jane Street",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Optiver",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Flow Traders",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Tower Research Capital",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Hudson River Trading",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Jump Trading",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "DRW",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Susquehanna International (SIG)",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Citadel Securities",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Two Sigma Securities",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "LMAX Exchange",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Saxo Bank",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Winterflood Securities",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Numis (Deutsche Numis)",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Shore Capital",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Panmure Liberum",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Kepler Cheuvreux",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "BTIG",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Cowen (TD Cowen)",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "Bernstein (AB)",
+    "category": "Trading Firms & Brokers"
+  },
+  {
+    "company": "St. James's Place",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Quilter",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Brewin Dolphin (RBC)",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Tilney Smith & Williamson",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Canaccord Genuity Wealth",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Close Brothers",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Coutts & Company",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "C. Hoare & Co",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "EFG International",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Julius Baer",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Rothschild & Co",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Lazard",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Evercore",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Moelis & Company",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Greenhill",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Perella Weinberg Partners",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "PJT Partners",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Centerview Partners",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Robey Warshaw",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Ondra Partners",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "McKinsey & Company",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Boston Consulting Group",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Bain & Company",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Oliver Wyman",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Deloitte",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "PwC (PricewaterhouseCoopers)",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "EY (Ernst & Young)",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "KPMG",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Accenture",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Capco",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Alvarez & Marsal",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "FTI Consulting",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Kroll",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Grant Thornton",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "BDO",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Mazars",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "RSM UK",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Protiviti",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "PA Consulting",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Delta Capita",
+    "category": "Consulting & Professional Services (Finance)"
+  },
+  {
+    "company": "Visa Europe",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "Mastercard",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "PayPal",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "Global Payments",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "Elavon",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "Worldline",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "Nexi Group",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "Fiserv",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "ACI Worldwide",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "Bottomline Technologies",
+    "category": "Payments & Transaction Processing"
+  },
+  {
+    "company": "Fitch Ratings",
+    "category": "Credit Rating & Research"
+  },
+  {
+    "company": "S&P Global Ratings",
+    "category": "Credit Rating & Research"
+  },
+  {
+    "company": "Moody's Investors Service",
+    "category": "Credit Rating & Research"
+  },
+  {
+    "company": "DBRS Morningstar",
+    "category": "Credit Rating & Research"
+  },
+  {
+    "company": "Scope Ratings",
+    "category": "Credit Rating & Research"
+  },
+  {
+    "company": "AM Best",
+    "category": "Credit Rating & Research"
+  },
+  {
+    "company": "Vitol",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "Trafigura",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "Glencore",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "Mercuria Energy",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "Gunvor Group",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "Koch Industries",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "Castleton Commodities International",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "Freepoint Commodities",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "Hartree Partners",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "Engelhart Commodities",
+    "category": "Commodity & Energy Trading"
+  },
+  {
+    "company": "European Bank for Reconstruction and Development (EBRD)",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "International Finance Corporation (IFC)",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "African Development Bank",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "Asian Infrastructure Investment Bank (AIIB)",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "Abu Dhabi Investment Authority (ADIA)",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "Kuwait Investment Authority",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "Qatar Investment Authority",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "GIC (Singapore)",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "Temasek",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "Norges Bank Investment Management",
+    "category": "Development Finance & Sovereign Wealth"
+  },
+  {
+    "company": "Hargreaves Lansdown",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "AJ Bell",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Charles Stanley",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Frasers Group Financial Services",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Metro Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Aldermore Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Shawbrook Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Atom Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Tandem Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Zopa Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Oakam",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Amigo Loans",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Together Money",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Paragon Banking Group",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "OneSavings Bank (OSB Group)",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Secure Trust Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Hampshire Trust Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "United Trust Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "PCF Group",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Recognise Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "ClearBank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Griffin Bank",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Modulr Finance",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Currencycloud (Visa)",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Equals Group",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Navan",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Sapiens",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "SmartRecruiters",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Sotheby's Financial Services",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Tikehau Capital",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Muzinich & Co",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Bluebay Asset Management (RBC)",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Record Currency Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Mondrian Investment Partners",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Veritas Asset Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Comgest",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "First Sentier Investors",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Martin Currie (Franklin)",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Bank of Ireland",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "AIB Group",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Santander Corporate & Investment Banking",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "ING Bank",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Rabobank International",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "ABN AMRO",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Commerzbank AG",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "DZ Bank AG",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Landesbank Baden-W\u00fcrttemberg (LBBW)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Bank of China (UK)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "ICBC Standard Bank",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "State Bank of India (UK)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Bank of Baroda (UK)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Punjab National Bank International",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Sumitomo Mitsui Banking Corporation",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Broadridge",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Linedata Services",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Multifonds (Temenos)",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Pacific Fund Systems",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "Milestone Group",
+    "category": "Custodians & Fund Administrators"
+  },
+  {
+    "company": "InvestCloud",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Torstone Technology (Broadridge)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "SmartStream Technologies",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Gresham Technologies",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "AutoRek",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Duco Technology",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Kaizen Reporting",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Taskize",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "AccessFintech",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Baton Systems",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Direct Line Group",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Legal & General Group",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Phoenix Group",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Standard Life",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Aegon UK",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "MetLife",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Chubb European Group",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "AXA UK",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "RSA Insurance",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Travelers Insurance",
+    "category": "Insurance & Reinsurance"
+  },
+  {
+    "company": "Partners Group",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Tikehau Capital (PE)",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Antin Infrastructure Partners",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Montagu Private Equity",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Equistone Partners",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Inflexion Private Equity",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Livingbridge",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "LDC (Lloyds Development Capital)",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "NorthEdge Capital",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Graphite Capital",
+    "category": "Private Equity & Venture Capital"
+  },
+  {
+    "company": "Acadia (Post-Trade)",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "TriOptima (CME)",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Pirum Systems",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Hazeltree",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "CloudMargin",
+    "category": "Exchanges, Clearing & Market Infrastructure"
+  },
+  {
+    "company": "Ruffer LLP",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Troy Asset Management",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Sarasin & Partners",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Brown Shipley (Quintet)",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Cazenove Capital (Schroders)",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Seven Investment Management (7IM)",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Charles Russell Speechlys (Wealth)",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Sanlam Investments UK",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Nedbank Private Wealth",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Bank of Singapore",
+    "category": "Wealth Management & Private Banking"
+  },
+  {
+    "company": "Markit (S&P Global)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Vermeg (formerly Lombard Risk)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Wolters Kluwer Financial Services",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "SteelEye",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Cappitech (S&P)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Bank Leumi (UK)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Habib Bank AG Zurich",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Mashreq Bank",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "First Abu Dhabi Bank (FAB)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Emirates NBD (London)",
+    "category": "Investment Banks"
+  },
+  {
+    "company": "Manulife Investment Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Principal Asset Management",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Russell Investments",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "LGPS Central",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Border to Coast Pensions",
+    "category": "Asset Managers"
+  },
+  {
+    "company": "Just Group (retirement finance)",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Pension Insurance Corporation",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Rothesay Life",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "LV= (Liverpool Victoria)",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Canada Life",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "Standard Life Aberdeen",
+    "category": "Specialist/Boutique Finance"
+  },
+  {
+    "company": "eToro",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Freetrade",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Nutmeg (JP Morgan)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Wealthify (Aviva)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Moneyfarm",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Scalable Capital",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Interactive Investor (abrdn)",
+    "category": "Fintech & Digital Finance"
+  },
+  {
+    "company": "Investcorp",
+    "category": "Private Equity & Venture Capital"
+  }
+]
