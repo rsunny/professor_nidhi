@@ -148,6 +148,92 @@ async def detect_platform_login(page: Page) -> Optional[str]:
     return None
 
 
+async def detect_platform_type(page: Page) -> dict:
+    """Detect what type of platform we're on and if login is required.
+
+    Returns a dict with:
+        - platform: "workday" | "greenhouse" | "taleo" | "generic" | None
+        - login_required: bool
+        - has_linkedin_oauth: bool
+        - reason: str (if login is required)
+    """
+    result = {
+        "platform": None,
+        "login_required": False,
+        "has_linkedin_oauth": False,
+        "reason": "",
+    }
+
+    try:
+        current_url = page.url.lower()
+
+        # Detect platform type from URL
+        if "myworkdayjobs.com" in current_url or "workday.com" in current_url:
+            result["platform"] = "workday"
+        elif "greenhouse.io" in current_url or "boards.greenhouse" in current_url:
+            result["platform"] = "greenhouse"
+        elif "taleo" in current_url:
+            result["platform"] = "taleo"
+        elif "lever.co" in current_url:
+            result["platform"] = "lever"
+        elif "smartrecruiters" in current_url:
+            result["platform"] = "smartrecruiters"
+        else:
+            result["platform"] = "generic"
+
+        # Check for LinkedIn OAuth button
+        linkedin_btn = await page.query_selector(
+            'button:has-text("Apply with LinkedIn"), a:has-text("Apply with LinkedIn"), '
+            'button:has-text("Sign in with LinkedIn"), a:has-text("Sign in with LinkedIn"), '
+            'button:has-text("Continue with LinkedIn"), a:has-text("Continue with LinkedIn")'
+        )
+        if linkedin_btn:
+            try:
+                if await linkedin_btn.is_visible():
+                    result["has_linkedin_oauth"] = True
+            except Exception:
+                pass
+
+        # Check if login is required
+        # Password field visible?
+        has_password = await page.evaluate("""() => {
+            const pwFields = document.querySelectorAll('input[type="password"]');
+            for (const f of pwFields) {
+                const rect = f.getBoundingClientRect();
+                if (rect.width > 0 && rect.height > 0) return true;
+            }
+            return false;
+        }""")
+
+        if has_password:
+            result["login_required"] = True
+            result["reason"] = "Password field detected"
+
+        # Check URL patterns
+        if any(p in current_url for p in ["/login", "/signin", "/sso", "/auth", "/createaccount", "/register", "/signup"]):
+            result["login_required"] = True
+            result["reason"] = f"Login URL pattern: {current_url[:80]}"
+
+        # Check for Workday-specific login elements
+        if result["platform"] == "workday":
+            workday_login = await page.query_selector(
+                '[data-automation-id="signIn"], [data-automation-id="createAccount"], '
+                'button:has-text("Create Account"), button:has-text("Sign In to Apply")'
+            )
+            if workday_login:
+                try:
+                    if await workday_login.is_visible():
+                        result["login_required"] = True
+                        result["reason"] = "Workday account creation/sign-in required"
+                except Exception:
+                    pass
+
+    except Exception:
+        pass
+
+    return result
+
+
 async def is_linkedin_signin_page(page: Page) -> bool:
     """Check if the current page is a LinkedIn sign-in page (not a platform login)."""
     url = page.url.lower()

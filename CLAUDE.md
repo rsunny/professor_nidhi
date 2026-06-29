@@ -28,17 +28,35 @@
 ## Key Files
 | File | Purpose |
 |------|---------|
+| `auto_apply/agents/__init__.py` | Agent framework: AgentResult, run_agent(), FORM_TOOLS, resolve_model() |
+| `auto_apply/agents/page_classifier.py` | Classify pages (login, form, success, expired, captcha) |
+| `auto_apply/agents/workday_agent.py` | Workday multi-page form agent |
+| `auto_apply/agents/greenhouse_agent.py` | Greenhouse form agent |
+| `auto_apply/agents/lever_agent.py` | Lever form agent |
+| `auto_apply/agents/generic_form_agent.py` | Fallback for unknown ATS platforms |
+| `auto_apply/agents/auth_agent.py` | OAuth, signin, account creation |
+| `auto_apply/agents/navigation_agent.py` | Find and click Apply/Next/Submit |
+| `auto_apply/apply_all_jobs.py` | Multi-agent orchestrator (routes jobs to agents) |
+| `auto_apply/fresh_easy_apply.py` | Real-time LinkedIn search + apply |
+| `auto_apply/batch_easy_apply.py` | Fast batch apply to pre-scraped LinkedIn jobs |
+| `auto_apply/apply_scraped_jobs.py` | Apply to external ATS via LinkedIn links |
 | `auto_apply/fetch_easy_apply.py` | Scrape LinkedIn Easy Apply jobs (DOM-based) |
 | `auto_apply/fetch_reed_jobs.py` | Scrape Reed.co.uk jobs |
 | `auto_apply/run_full_pipeline.py` | Master script: fetch + apply all |
 | `auto_apply/workflow.py` | Step 2-4 orchestrator (categorize → apply) |
-| `auto_apply/linkedin_apply.py` | Easy Apply handler (modal-scoped AI agent) |
-| `auto_apply/external_apply.py` | External ATS handler (Workday/Greenhouse/Reed/etc) |
-| `auto_apply/job_scraper.py` | Original AI-driven scraper (slower, more thorough) |
+| `auto_apply/linkedin_apply.py` | Easy Apply handler (modal-scoped AI, Opus) |
+| `auto_apply/profile_tools.py` | Answer resolution engine + cover letter generation |
 | `auto_apply/ai_navigator.py` | Core browser automation agent |
 | `auto_apply/.env` | Credentials + config (MODE=auto, Bedrock keys) |
-| `auto_apply/data/` | All job JSON files |
-| `auto_apply/output/` | Application logs + screenshots |
+| `auto_apply/data/` | All job JSON files + progress checkpoints |
+| `auto_apply/output/` | Application logs, screenshots, cover letters |
+
+## Documentation
+| File | Purpose |
+|------|---------|
+| `AGENT.md` | Multi-agent architecture reference (for code changes) |
+| `PROD.md` | Production runbook (for running the pipeline) |
+| `~/.claude/skills/nidhi/SKILL.md` | `/nidhi` skill (subcommands for pipeline operations) |
 
 ## Architecture Notes
 - **Browser**: Playwright (headless=False for debugging, can switch to headless for unattended)

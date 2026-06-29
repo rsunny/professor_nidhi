@@ -155,6 +155,14 @@ def execute_lookup(question: str, field_type: str, options: list[str] | None = N
     q = question.lower().strip()
 
     # 0. Quick-match fields that need special formatting or empty values
+
+    # LinkedIn profile URL — must return the actual URL, not "LinkedIn" text
+    # Matches: "LinkedIn", "LinkedIn Profile", "LinkedIn URL", "Your LinkedIn", etc.
+    if re.search(r"\blinkedin\b", q) and not re.search(r"how did you|where did you|hear about|source|referral", q):
+        linkedin_url = profile.get("personal", {}).get("linkedin_url", "")
+        if linkedin_url:
+            return _result(linkedin_url, "high", "profile_field: linkedin_url")
+
     if re.search(r"\bmiddle\s*name\b", q):
         return _result("", "high", "profile_field: no_middle_name")
 
@@ -426,6 +434,14 @@ def _check_common_sense(q: str, options: list[str] | None, profile: dict, field_
             return _result(no, "high", "common_sense: no_disability")
         return _result("No", "high", "common_sense: no_disability")
 
+    # Pronouns
+    if re.search(r"\bpronoun", q):
+        if options:
+            answer = _best_match("She/Her", options)
+        else:
+            answer = "She/Her"
+        return _result(answer, "high", "common_sense: pronouns")
+
     # Gender
     if re.search(r"\bgender\b|\bsex\b", q) and not re.search(r"sexual", q):
         if options:
@@ -615,8 +631,8 @@ def _lookup_profile_fields(q: str, profile: dict) -> str | None:
     if re.search(r"\blocation\b", q):
         return personal.get("location", personal.get("city"))
 
-    # LinkedIn
-    if re.search(r"\blinkedin\b", q):
+    # LinkedIn — only match when asking for LinkedIn URL/profile specifically
+    if re.search(r"\blinkedin\b", q) and re.search(r"url|profile|link|page|account|linkedin\s*$", q):
         return personal.get("linkedin_url")
 
     # Website / portfolio
